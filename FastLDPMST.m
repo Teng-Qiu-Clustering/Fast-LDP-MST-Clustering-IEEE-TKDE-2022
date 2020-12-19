@@ -24,7 +24,7 @@ end
 % clear data 
  
 %% determine multiple label matrix ML
-disp('determine multiple label matrix for each node'); 
+disp('determine multiple label matrix for each node...'); 
 % method 3: vectorization of method 2
 K = supk + 1; 
 ML = sparse(knnIndex(:),c(repmat((1:N)',K,1)),ones(N*K,1),N,M); % Equivalent to: I = knnIndex(:);J = c(repmat((1:N)',K,1));V = ones(N*K,1); ML = sparse(I,J,V,N,M);
@@ -39,7 +39,7 @@ for t = 1:length(I)
     cell_L{1,I(t)} = [cell_L{1,I(t)},J(t)]; 
 end
  
-disp('compute sum rho..');
+disp('sum over density...');
 rho_matrix=sparse(M,M);
 count_matrix = sparse(M,M);
 for j = 1:N
@@ -90,7 +90,7 @@ end
 disp('Cut the tree...') 
 cores_cl = Cut_MST_QT_v2(I_base,W,nc,minsize,clu_num);
 
-%% Update cluster label 
+%% final cluster assignment 
 disp('final cluster assignment...');
 c=zeros(N,1);
 c(rs)=cores_cl;

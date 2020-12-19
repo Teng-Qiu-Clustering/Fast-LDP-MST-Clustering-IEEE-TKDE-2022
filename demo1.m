@@ -6,8 +6,9 @@ data_names={'AGG','Flame','Spiral','Jain','2G','2G_unbalance','S1','R15','3Circl
 
 % data_names = {'cytof_h1','cytof_h2','cytof_one','Samusik_01','Samusik_all','Levine_32dim','Levine_13dim','CellCycle','colon','muscle'};
 % data_names = {'gauss_spiral_circle_dataWithLabel','gauss_spiral_circle_data_in_noiseWithLabel'};
-data_names = {'PenDigits','MNIST'};
-% data_names = {'data_TB1M'};
+% data_names = {'PenDigits','MNIST'};
+data_names = {'data_TB1M'};
+% data_names = {'cytof_h2'};
 %% method and setting
 method_names = {'FastLDPMST'};  
 % method_names = {'LDP-MST','FastLDPMST'};
@@ -42,19 +43,17 @@ for name_id=1:length(data_names)
                 error('method is not included...please name the method appropriately.')
         end
         %% evaluate and plot
-        diff_colors = linspecer(length(unique(Label)));
-        
+        diff_colors = linspecer(length(unique(Label))); 
         if dim == 2
             figure;
             if N>100000
                 idx = randperm(N,10000);
-                subplot(1,2,1);scatter(data(idx,1),data(idx,2),10,'k','filled')
-                subplot(1,2,2);scatter(data(idx,1),data(idx,2),3,diff_colors(Label(idx),:),'filled')
+                subplot(1,2,1);scatter(data(idx,1),data(idx,2),10,'k','filled'); axis tight; set(gca,'xtick',[],'ytick',[],'FontSize',10,'Linewidth',.01);box on;
+                subplot(1,2,2);scatter(data(idx,1),data(idx,2),3,diff_colors(Label(idx),:),'filled'); axis tight; set(gca,'xtick',[],'ytick',[],'FontSize',10,'Linewidth',.01);box on;
             else
-                subplot(1,2,1);scatter(data(:,1),data(:,2),3,'k','filled');
-                subplot(1,2,2);scatter(data(:,1),data(:,2),3,diff_colors(Label,:),'filled')
-            end
-            axis tight; set(gca,'xtick',[],'ytick',[],'FontSize',10,'Linewidth',.01);box on;
+                subplot(1,2,1);scatter(data(:,1),data(:,2),3,'k','filled'); axis tight; set(gca,'xtick',[],'ytick',[],'FontSize',10,'Linewidth',.01);box on;
+                subplot(1,2,2);scatter(data(:,1),data(:,2),3,diff_colors(Label,:),'filled'); axis tight; set(gca,'xtick',[],'ytick',[],'FontSize',10,'Linewidth',.01);box on;
+            end 
         end
         
         record_num = record_num + 1;
