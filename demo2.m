@@ -7,14 +7,7 @@ data_names ={'TB', 'SF', 'CC', 'CG', 'Flower'};
 %% method 
 method_names = {'FastLDPMST'}; 
 % method_names = {'LDP-MST','FastLDPMST'}; 
-%% parameter setting
-densityMethod = 'NaturalNeighborWithThreshold'; %  'Simple-knn-based' or 'NaturalNeighborBased' or NaturalNeighborWithThreshold
  
-cutMethod = 'a2'; % 'a1':  nodeWeight-based autoCut; 'a2' % unionFind-based autoCut; 'm1': manual cut + logscale; 'm2': manual cut;
-ratio = 0.018; %  [0.01,0.02] is recommended; not needed for manual cutting;
-LDP_method = 'GGA'; % NNA or GGA. 
-
-distance_function = 'euclidean'; % Note: % for hnsw, its distance function only supports: 'euclidean','l2','cosine','ip';
 %% start
 plot_flag = 1;
 for name_id=1:length(data_names)
@@ -50,9 +43,11 @@ for name_id=1:length(data_names)
             [N,dim]=size(data);
             ClustN = length(unique(annotation_data));
             disp(['#objects: ',num2str(N),'; #features: ',num2str(dim)])
-            % parameter
             
+            % parameter
+            ratio = 0.018; %  [0.01,0.02] is recommended; not needed for manual cutting;
             minsize= ratio*N; 
+            
             switch method
                 case 'LDP-MST' % Cheng's method
                     [Label,time] = LDPMST_cheng(data, ClustN, minsize);   %% code by Cheng
