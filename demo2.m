@@ -46,13 +46,13 @@ for name_id=1:length(data_names)
             
             % parameter
             ratio = 0.018; %  [0.01,0.02] is recommended; not needed for manual cutting;
-            minsize= ratio*N; 
+            minsize= ratio*N;  
             
             switch method
                 case 'LDP-MST' % Cheng's method
                     [Label,time] = LDPMST_cheng(data, ClustN, minsize);   %% code by Cheng
                 case 'FastLDPMST' 
-                    [Label,time] = LDPMST_QT_exact_fast_less_memory_v2(data, ClustN, minsize,knnMethod,initial_max_k); %%
+                    [Label,time] = FastLDPMST(data, ClustN, minsize); %%
                 otherwise
                     error('method is not included...please name the method appropriately.')
             end
