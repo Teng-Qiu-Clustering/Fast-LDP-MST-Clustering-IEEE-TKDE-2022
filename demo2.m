@@ -16,7 +16,7 @@ for name_id=1:length(data_names)
     for method_id = 1:length(method_names)
         method = method_names{method_id};
         
-        exponents = 14:16;
+        exponents = 14:20;
         for exponent_id = 1:length(exponents)
             clear data annotation_data
             dataSize = 2.^exponents(exponent_id);
