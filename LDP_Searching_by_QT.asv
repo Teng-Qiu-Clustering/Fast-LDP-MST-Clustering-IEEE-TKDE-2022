@@ -13,9 +13,8 @@ disp('determine the inital k nearest neighbors...');
 distance_function = 'euclidean';
 switch knnMethod
     case 'kd_tree'
-        % Note 1: knnsearch uses the exhaustive search method by default to find the k-nearest neighbors: The number of columns of X is more than 10.
+        % Note: knnsearch uses the exhaustive search method by default to find the k-nearest neighbors: The number of columns of X is more than 10.
         % knnsearch uses the kd-tree search method by default to find the k-nearest neighbors: The number of columns of X is less than or equal to 10.
-        % Note 2: the initial neighbor is the searched node itself
         constructed_search_tree = createns(data,'NSMethod','kdtree','Distance',distance_function);
         [neighborIds, knnD] = knnsearch(constructed_search_tree,data,'k',initial_max_k);
     case 'hnsw'
@@ -37,7 +36,7 @@ while 1
     end
  
     count2=sum(nb==0);
-    if (count1==count2) || (supk+1 == initial_max_k)
+    if (count1==count2) || (supk == initial_max_k - 1)
         break
     else
         supk=supk+1;
@@ -46,9 +45,9 @@ while 1
 end
  
 neighborIds = neighborIds(:,1:supk+1);
- 
+
+temp = min(max(nb),supk+1);
 knnD = knnD(:,1:supk+1);
-% knnD = knnD(:,1:min(max(nb),initial_max_k));
 %% Search local density peaks
 disp('Search local density peaks...');
 dist_sum = sum(knnD,2);

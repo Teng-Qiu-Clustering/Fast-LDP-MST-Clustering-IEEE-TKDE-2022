@@ -8,7 +8,7 @@ data_names={'AGG','Flame','Spiral','Jain','2G','2G_unbalance','S1','R15','3Circl
 % data_names = {'gauss_spiral_circle_dataWithLabel','gauss_spiral_circle_data_in_noiseWithLabel'};
 % data_names = {'PenDigits','MNIST'};
 % data_names = {'data_TB1M'};
-data_names = {'cytof_h2'};
+% data_names = {'cytof_h2'};
 %% method and setting
 method_names = {'FastLDPMST'};  
 % method_names = {'LDP-MST','FastLDPMST'};

@@ -30,7 +30,7 @@ for name_id=1:length(data_names)
                 synthesizeLargescaleDatasets_withArbitrarySizes(dataName,dataSize);
                 close(gcf)
             end            
-            load(fileName)
+            load(fileName); pause(2);
             
             annotation_data = gt;
             data = fea;
@@ -88,10 +88,8 @@ ha = tight_subplot(2,length(data_names),[.08, .05],[0.15, .04],[0.06, 0.01]); %t
 
 subplot_id = 1;
 for name_id = 1:length(data_names) 
-    dataName = data_names{name_id}; 
-    a = Result_all;
-    load(['compare_varying_size_',dataName,'.mat'])
-    Result_all = [a Result_all];
+    dataName = data_names{name_id};  
+    load(['compare_varying_size_',dataName,'.mat']) 
     method_all = [];
     data_name_all = [];
     for j = 1:length(Result_all)
@@ -111,7 +109,6 @@ for name_id = 1:length(data_names)
     NMI_all = [Result_all.NMI];
     ARI_all = [Result_all.ARI];
     time_all = [Result_all.time];
-    
  
     markers = {'+','o','*','x','s','d','^','v','>','<','p','h'};
     axes(ha(subplot_id));    
@@ -122,7 +119,7 @@ for name_id = 1:length(data_names)
         id = find(strcmp(method_all, method));
         x = 2.^(10:length(time_all(id))+9); 
         y = time_all(id);
-        xx = x(5:end); yy = y(5:end);        
+        xx = x(1:end); yy = y(1:end);        
         loglog(xx,yy,'-','Marker',markers{mod(method_id,numel(markers))},'MarkerSize',7);
       
         hold on
@@ -130,17 +127,15 @@ for name_id = 1:length(data_names)
     
    
     set(gca,'FontSize',fonS);
-%     xlabel('N','FontSize',fonS)
+    %     xlabel('N','FontSize',fonS)
     if name_id == 1
-    ylabel('Runtime (seconds)','FontSize',fonS)
+        ylabel('Runtime (seconds)','FontSize',fonS)
     end
     title(dataName,'FontSize',fonS)
     set(gca,'xtick',10.^(round(min(log10(x))):ceil(max(log10(x))))) 
     set(gca,'ytick',10.^(round(min(log10(time_all))):ceil(max(log10(time_all))))) 
- 
- 
-    hold off
- 
+    
+    hold off 
     axes(ha(subplot_id + length(data_names)));     subplot_id = subplot_id + 1;
     
     method_names = unique(method_all);
@@ -149,7 +144,7 @@ for name_id = 1:length(data_names)
         id = find(strcmp(method_all, method));
         x = 2.^(10:length(time_all(id))+9);
         y = ARI_all(id);
-        xx = x(5:end); yy = y(5:end);
+        xx = x(1:end); yy = y(1:end);
         semilogx(xx,yy,'-','Marker',markers{mod(method_id,numel(markers))},'MarkerSize',7);
        
         hold on
