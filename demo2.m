@@ -80,7 +80,7 @@ end
  
 %% plot comparison on scores
 close all
-figure('position',[37 52 1785 921]);   
+figure('position',[52.2000 61.8000 1415 712.8000]);   
 fonS = 17;
 ha = tight_subplot(2,length(data_names),[.08, .05],[0.15, .04],[0.06, 0.01]); %tight_subplot(Nh, Nw, gap, marg_h, marg_w)
 
