@@ -10,4 +10,4 @@ Note:
 
 2) for **Demo 2**, there may be difference for the result in different runs, because the test datasets in Demo2 are randomly sampled from some density functions (that is, the test datasets are different in different runs). Note that the proposed method is not sensitive to the initialization (that is, for the same dataset, the proposed method will show the same result, as demonstrated by Demo 1). 
 
-3) because our article is currently under review, we only provide the .p files for the proposed method such that the contents of the files are not avaiable (we will submit the corresponding .m files once the article is accepted)
+3) because this method is currently under review, we only provide the .p files for the proposed method such that the contents of the files are not avaiable (we will submit the corresponding .m files once the method is accepted)
