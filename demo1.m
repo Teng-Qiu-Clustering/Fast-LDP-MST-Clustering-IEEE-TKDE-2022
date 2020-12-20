@@ -1,48 +1,42 @@
 %%
 clear;close all;clc
-
-%% datasets
+%% Datasets
 data_names={'AGG','Flame','Spiral','Jain','2G','2G_unbalance','S1','R15','3Circles','S1_001S1'};
-
 % data_names = {'cytof_h1','cytof_h2','cytof_one','Samusik_01','Samusik_all','Levine_32dim','Levine_13dim','CellCycle','colon','muscle'};
 % data_names = {'gauss_spiral_circle_dataWithLabel','gauss_spiral_circle_data_in_noiseWithLabel'};
 % data_names = {'PenDigits','MNIST'};
 % data_names = {'data_TB1M'};
 % data_names = {'cytof_h2'};
-%% method and setting
+%% Methods
 method_names = {'FastLDPMST'};  
 % method_names = {'LDP-MST','FastLDPMST'};
- 
-ratio = 0.018; %  [0.01,0.02] is recommended; not needed for manual cutting; 
-%% start
+
+%% Start Testing
 record_num = 0;
 for name_id=1:length(data_names)
+    %% load dataset
     clear data annotation_data
     dataName = data_names{name_id};
     disp([num2str(name_id),', ',dataName,':'])
     [data,annotation_data,ClustN,dataName] = load_dataset(dataName);
     [N,dim]=size(data);
     
-    minsize=ratio*N;
-    initial_max_k = ceil(log2(N));
-    %% compare with our faster version
-    if dim< 20
-        knnMethod = 'kd_tree';         disp('kd-tree exact fast knn searching technique is used for the dataset with Dimension lower than 20')
-    else
-        knnMethod = 'hnsw';            disp('hnsw (L2 distance) approximate fast knn searching technique is used for the dataset with Dimension larger than 20')
-    end
-     
+    %% parameter setting
+    ratio = 0.018; %  [0.01,0.02] is recommended; not needed for manual cutting; 
+    mS=ratio*N; % Note: parameter mS (i.e.,the minimal cluster size) is dependent on ratio;
+    K = ceil(log2(N)); 
+     %% compare different methods
     for method_id = 1:length(method_names)
         method = method_names{method_id};
         switch method
             case 'LDP-MST' % Cheng's method
-                [Label,time] = LDPMST_cheng(data, ClustN, minsize);   %% code provided by Cheng
+                [Label,time] = LDPMST_cheng(data, ClustN, mS);   %% code provided by Cheng
             case 'FastLDPMST'  
-                [Label,time] = FastLDPMST(data, ClustN, minsize,knnMethod,initial_max_k); %%
+                [Label,time] = FastLDPMST(data, ClustN, mS, K); %%
             otherwise
                 error('method is not included...please name the method appropriately.')
         end
-        %% evaluate and plot
+        %% evaluate result and plot
         diff_colors = linspecer(length(unique(Label))); 
         if dim == 2
             figure;
@@ -82,7 +76,7 @@ for name_id=1:length(data_names)
         disp([Result_all(record_num).data_name, ',  Runtime = ',sprintf('%.3f',time),'sec'])
     end
 end
-%%
+%% show all results
 disp(' ******************** All Results ************************ ')
 if exist('Result_all','var')
     disp(struct2table(Result_all, 'AsArray', true)) %struct2table function may not exist in low matlab version; if so, then use the following commented codes

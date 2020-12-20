@@ -1,4 +1,4 @@
-function [c,time] = FastLDPMST(data,clu_num,minsize,knnMethod,initial_max_k)
+function [c,time] = FastLDPMST(data,clu_num,minsize,initial_max_k,knnMethod)
 %Input:
 %  data: data set (nrow: samples; col: features);
 %  clu_num: number of clusters;
@@ -17,15 +17,16 @@ if nargin < 3
     minsize = 0.018*N;
 end 
 if nargin < 4
+   initial_max_k = ceil(log2(N));
+end
+if nargin < 5
     if dim < 20
         knnMethod = 'kd_tree';       disp('kd-tree exact fast knn searching technique is used for the dataset with Dimension lower than 20')
     else
         knnMethod = 'hnsw';       disp('hnsw (L2 distance) approximate fast knn searching technique is used for the dataset with Dimension larger than 20')
     end
 end 
-if nargin < 5
-   initial_max_k = ceil(log2(N));
-end
+
  
 tic;
 %% initial clustering by LDP

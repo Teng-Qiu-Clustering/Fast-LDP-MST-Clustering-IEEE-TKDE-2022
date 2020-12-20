@@ -1,14 +1,12 @@
 %%
-clear;close all;clc; 
- 
-%% datasets 
+clear;close all;clc;  
+%% Datasets 
 data_names ={'TB', 'SF', 'CC', 'CG', 'Flower'}; 
 % data_names ={'TB'}; 
-%% method 
+%% Methods 
 method_names = {'FastLDPMST'}; 
 % method_names = {'LDP-MST','FastLDPMST'}; 
- 
-%% start
+%% start testing
 plot_flag = 1;
 for name_id=1:length(data_names)
     Result_all = [];test_num = 1; 
@@ -18,12 +16,11 @@ for name_id=1:length(data_names)
         
         exponents = 14:20;
         for exponent_id = 1:length(exponents)
+           %% load dataset
             clear data annotation_data
-            dataSize = 2.^exponents(exponent_id);
-          
+            dataSize = 2.^exponents(exponent_id);          
             dataName = data_names{name_id};
-            disp([dataName,'_',num2str(dataSize),':'])
-            
+            disp([dataName,'_',num2str(dataSize),':'])            
             fileName = ['data_',data_names{name_id},'_',num2str(dataSize),'.mat'];
             if ~exist(fileName,'file') 
                 figure;
@@ -44,19 +41,19 @@ for name_id=1:length(data_names)
             ClustN = length(unique(annotation_data));
             disp(['#objects: ',num2str(N),'; #features: ',num2str(dim)])
             
-            % parameter
+            %% parameter setting
             ratio = 0.018; %  [0.01,0.02] is recommended; not needed for manual cutting;
-            minsize= ratio*N;  
-            
+            mS= ratio*N;  
+            %% compared methods
             switch method
                 case 'LDP-MST' % Cheng's method
-                    [Label,time] = LDPMST_cheng(data, ClustN, minsize);   %% code by Cheng
+                    [Label,time] = LDPMST_cheng(data, ClustN, mS);   %% code by Cheng
                 case 'FastLDPMST' 
-                    [Label,time] = FastLDPMST(data, ClustN, minsize); %%
+                    [Label,time] = FastLDPMST(data, ClustN, mS); %%
                 otherwise
                     error('method is not included...please name the method appropriately.')
             end
-            
+            %% Evaluate results
             clear data
             Result_all(test_num).data_name = [dataName,'_',num2str(dataSize)];
             Result_all(test_num).N = N;
