@@ -3,10 +3,9 @@ clear;close all;clc
 addpath(genpath(pwd));
 %% Datasets
 data_names={'AGG','Flame','Spiral','Jain','2G','2G_unbalance','S1','R15','3Circles','S1_001S1'};
-% data_names = {'cytof_h1','cytof_h2','cytof_one','Samusik_01','Samusik_all','Levine_32dim','Levine_13dim','CellCycle','colon','muscle'};
 % data_names = {'gauss_spiral_circle_dataWithLabel','gauss_spiral_circle_data_in_noiseWithLabel'};
 % data_names = {'PenDigits','MNIST'};
-% data_names = {'data_TB1M'};
+% data_names = {'data_TB1M'}; % a million samples
 % data_names = {'cytof_h2'};
 %% Methods
 method_names = {'FastLDPMST'};  
@@ -52,7 +51,7 @@ for name_id=1:length(data_names)
         end
         
         record_num = record_num + 1;
-        Result_all(record_num).data_name = data_names{name_id};
+        Result_all(record_num).dataName = data_names{name_id};
         Result_all(record_num).N = N;
         Result_all(record_num).DIM = dim;
         if exist('annotation_data','var')
@@ -62,19 +61,17 @@ for name_id=1:length(data_names)
                 annotation_data = annotation_data(~id_Nan);
                 Label = Label(~id_Nan);
             end
-            [NMI_max,ARI,NMI_sqrt,AMI]= NMI_ARI(Label,annotation_data);
-            Result_all(record_num).NMI_max = round(NMI_max*1000)/1000;
-            Result_all(record_num).NMI_sqrt = round(NMI_sqrt*1000)/1000;
-            Result_all(record_num).ARI = round(ARI*1000)/1000;
-            Result_all(record_num).AMI = round(AMI*1000)/1000;
-            Result_all(record_num).PC = length(unique(Label));
-            Result_all(record_num).TC = length(unique(annotation_data));
-            disp([Result_all(record_num).data_name, ': ARI = ', sprintf('%0.4f',Result_all(record_num).ARI),',  Runtime = ',sprintf('%.3f',time),'sec'])
+            [NMI,ARI]= NMI_ARI(Label,annotation_data);
+            Result_all(record_num).NMI = round(NMI*1000)/1000; 
+            Result_all(record_num).ARI = round(ARI*1000)/1000; 
+%             Result_all(record_num).PC = length(unique(Label));
+%             Result_all(record_num).TC = length(unique(annotation_data));
+            disp([Result_all(record_num).dataName, ': ARI = ', sprintf('%0.4f',Result_all(record_num).ARI),',  Runtime = ',sprintf('%.3f',time),'sec'])
         end
         Result_all(record_num).time = [sprintf('%.3f',time),'sec'];
-        Result_all(record_num).ratio = ratio; 
+%         Result_all(record_num).ratio = ratio; 
         Result_all(record_num).method = method;
-        disp([Result_all(record_num).data_name, ',  Runtime = ',sprintf('%.3f',time),'sec'])
+        disp([Result_all(record_num).dataName, ',  Runtime = ',sprintf('%.3f',time),'sec'])
     end
 end
 %% show all results
