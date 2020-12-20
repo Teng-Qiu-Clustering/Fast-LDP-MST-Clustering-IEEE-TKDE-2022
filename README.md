@@ -6,7 +6,7 @@
 
 Note: 
 
-1) for **Demo 1**, you can choose different datasets (**shown in the datasets section**) and different methods (**shown in the Methods section**) to test.
+1) for **Demo 1**, you can choose different datasets (**shown in the datasets section**) to test.
 
-2) for **Demo 2**, there may be difference for the result in different runs, because the test datasets in Demo2 are randomly sampled from some density functions (that is, the test datasets are different in different runs). Note that the proposed method is not sensitive to the initialization (i.e., for the same dataset, the proposed method will show the same result, as demonstrated by Demo 1). 
+2) for **Demo 2**, the resultS may be different in different runs, because the test datasets in Demo2 are randomly sampled from some density functions (that is, the test datasets are different in different runs). Note that the proposed method is not sensitive to the initialization (i.e., for the same dataset, the proposed method will show the same result in different runs. This can be demonstrated by Demo 1). 
  
