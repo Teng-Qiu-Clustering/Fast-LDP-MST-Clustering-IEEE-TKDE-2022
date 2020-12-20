@@ -1,15 +1,9 @@
 function cl = Cut_MST_QT_v2(I_base,EW,NW,minsize,cluterN)
+ 
+% Note: the input NW stores the weights of the root nodes in the initially
+% constructed in-tree-based forest (i.e., the result of step 1 of the "ComputeNW" algorithm)
 
-% example:
-% I_base = [3,3,4,4,6,6,5];
-% NW = [2,3,1,2,1,2,2];
-% EW = [1,1,2,0,2,0,3];
-% cluterN = 4;minsize = 1;
-
-% Note that the input NW is the weight for each node i in ROOTS before MST
-% construction
-
-% Compute inNeighbors
+% Compute inNeighbors (i.e., step 2 of the "ComputeNW" algorithm)
 M = length(NW);
 inNei = cell(1,M);
 for i = 1:M

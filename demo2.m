@@ -1,5 +1,6 @@
 %%
 clear;close all;clc;  
+addpath(genpath(pwd));
 %% Datasets 
 data_names ={'TB', 'SF', 'CC', 'CG', 'Flower'}; 
 % data_names ={'TB'}; 

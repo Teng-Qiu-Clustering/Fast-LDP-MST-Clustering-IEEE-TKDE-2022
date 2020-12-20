@@ -1,5 +1,6 @@
 %%
 clear;close all;clc
+addpath(genpath(pwd));
 %% Datasets
 data_names={'AGG','Flame','Spiral','Jain','2G','2G_unbalance','S1','R15','3Circles','S1_001S1'};
 % data_names = {'cytof_h1','cytof_h2','cytof_one','Samusik_01','Samusik_all','Levine_32dim','Levine_13dim','CellCycle','colon','muscle'};
