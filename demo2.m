@@ -74,7 +74,7 @@ for name_id=1:length(data_names)
         end
     end 
     %% save result 
-    save(['compare_varying_size_',dataName,'.mat'],'Result_all','method_names','data_names')
+    save(['compare_varying_size_',dataName,'.mat'],'Result_all','method_names','data_names','exponents')
     
 end
  
@@ -111,11 +111,12 @@ for name_id = 1:length(data_names)
     markers = {'+','o','*','x','s','d','^','v','>','<','p','h'};
     axes(ha(subplot_id));    
     
+    %% Runtime
     method_names = unique(method_all);
     for method_id = 1:length(method_names)
         method = method_names{method_id};
         id = find(strcmp(method_all, method));
-        x = 2.^(10:length(time_all(id))+9); 
+        x = 2.^exponents; 
         y = time_all(id);
         xx = x(1:end); yy = y(1:end);        
         loglog(xx,yy,'-','Marker',markers{mod(method_id,numel(markers))},'MarkerSize',7);
@@ -133,14 +134,16 @@ for name_id = 1:length(data_names)
     set(gca,'xtick',10.^(round(min(log10(x))):ceil(max(log10(x))))) 
     set(gca,'ytick',10.^(round(min(log10(time_all))):ceil(max(log10(time_all))))) 
     
-    hold off 
+    hold off
+    
     axes(ha(subplot_id + length(data_names)));     subplot_id = subplot_id + 1;
     
+    %% ARI
     method_names = unique(method_all);
     for method_id = 1:length(method_names)
         method = method_names{method_id};
         id = find(strcmp(method_all, method));
-        x = 2.^(10:length(time_all(id))+9);
+        x = 2.^exponents;
         y = ARI_all(id);
         xx = x(1:end); yy = y(1:end);
         semilogx(xx,yy,'-','Marker',markers{mod(method_id,numel(markers))},'MarkerSize',7);
