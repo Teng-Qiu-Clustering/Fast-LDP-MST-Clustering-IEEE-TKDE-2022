@@ -8,9 +8,7 @@ data_names={'AGG','Flame','Spiral','Jain','2G','2G_unbalance','S1','R15','3Circl
 % data_names = {'cytof_h2'};
 % data_names = {'PenDigits','MNIST'};
 %% Methods
-method_names = {'FastLDPMST'};  
-% method_names = {'LDP-MST','FastLDPMST'};
-
+method_names = {'FastLDPMST'};   
 %% Start Testing
 record_num = 0;
 for name_id=1:length(data_names)
@@ -29,8 +27,6 @@ for name_id=1:length(data_names)
     for method_id = 1:length(method_names)
         method = method_names{method_id};
         switch method
-            case 'LDP-MST' % Cheng's method
-                [Label,time] = LDPMST_cheng(data, ClustN, mS);   %% code provided by Cheng
             case 'FastLDPMST'  
                 [Label,time] = FastLDPMST(data, ClustN, mS, K); %%
             otherwise
@@ -39,19 +35,14 @@ for name_id=1:length(data_names)
         %% evaluate result and plot
         diff_colors = linspecer(length(unique(Label))); 
         if dim == 2
-            figure;
-            if N>100000
-                idx = randperm(N,10000);
-                subplot(1,2,1);scatter(data(idx,1),data(idx,2),10,'k','filled'); axis tight; set(gca,'xtick',[],'ytick',[],'FontSize',10,'Linewidth',.01);box on;
-                subplot(1,2,2);scatter(data(idx,1),data(idx,2),3,diff_colors(Label(idx),:),'filled'); axis tight; set(gca,'xtick',[],'ytick',[],'FontSize',10,'Linewidth',.01);box on;
-            else
-                subplot(1,2,1);scatter(data(:,1),data(:,2),3,'k','filled'); axis tight; set(gca,'xtick',[],'ytick',[],'FontSize',10,'Linewidth',.01);box on;
-                subplot(1,2,2);scatter(data(:,1),data(:,2),3,diff_colors(Label,:),'filled'); axis tight; set(gca,'xtick',[],'ytick',[],'FontSize',10,'Linewidth',.01);box on;
-            end 
+            figure; idx = 1:N;
+            if N>100000,idx = randperm(N,10000);end
+            subplot(1,2,1);scatter(data(idx,1),data(idx,2),10,'k','filled'); axis tight; set(gca,'xtick',[],'ytick',[],'FontSize',10,'Linewidth',.01);box on;
+            subplot(1,2,2);scatter(data(idx,1),data(idx,2),3,diff_colors(Label(idx),:),'filled'); axis tight; set(gca,'xtick',[],'ytick',[],'FontSize',10,'Linewidth',.01);box on;
         end
         
         record_num = record_num + 1;
-        Result_all(record_num).dataName = data_names{name_id};
+        Result_all(record_num).dataName = dataName;
         Result_all(record_num).N = N;
         Result_all(record_num).DIM = dim;
         if exist('annotation_data','var')
@@ -63,13 +54,9 @@ for name_id=1:length(data_names)
             end
             [NMI,ARI]= NMI_ARI(Label,annotation_data);
             Result_all(record_num).NMI = round(NMI*1000)/1000; 
-            Result_all(record_num).ARI = round(ARI*1000)/1000; 
-%             Result_all(record_num).PC = length(unique(Label));
-%             Result_all(record_num).TC = length(unique(annotation_data));
-            disp([Result_all(record_num).dataName, ': ARI = ', sprintf('%0.4f',Result_all(record_num).ARI),',  Runtime = ',sprintf('%.3f',time),'sec'])
+            Result_all(record_num).ARI = round(ARI*1000)/1000;  
         end
-        Result_all(record_num).time = [sprintf('%.3f',time),'sec'];
-%         Result_all(record_num).ratio = ratio; 
+        Result_all(record_num).time = [sprintf('%.3f',time),'sec']; 
         Result_all(record_num).method = method;
         disp([Result_all(record_num).dataName, ',  Runtime = ',sprintf('%.3f',time),'sec'])
     end

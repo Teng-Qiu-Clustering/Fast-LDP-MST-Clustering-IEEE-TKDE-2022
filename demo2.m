@@ -5,8 +5,7 @@ addpath(genpath(pwd));
 data_names ={'TB', 'SF', 'CC', 'CG', 'Flower'}; 
 % data_names ={'TB'}; 
 %% Methods 
-method_names = {'FastLDPMST'}; 
-% method_names = {'LDP-MST','FastLDPMST'}; 
+method_names = {'FastLDPMST'};  
 %% start testing
 plot_flag = 1;
 for name_id=1:length(data_names)
@@ -46,9 +45,7 @@ for name_id=1:length(data_names)
             ratio = 0.018; %  [0.01,0.02] is recommended; not needed for manual cutting;
             mS= ratio*N;  
             %% compared methods
-            switch method
-                case 'LDP-MST' % Cheng's method
-                    [Label,time] = LDPMST_cheng(data, ClustN, mS);   %% code by Cheng
+            switch method 
                 case 'FastLDPMST' 
                     [Label,time] = FastLDPMST(data, ClustN, mS); %%
                 otherwise
@@ -75,7 +72,6 @@ for name_id=1:length(data_names)
     end 
     %% save result 
     save(['compare_varying_size_',dataName,'.mat'],'Result_all','method_names','data_names','exponents')
-    
 end
  
 %% plot comparison on scores
@@ -98,9 +94,7 @@ for name_id = 1:length(data_names)
     for j = 1:length(method_all)
         switch method_all{j} 
             case 'FastLDPMST'
-                method_all{j} = 'FastLDPMST';
-            case 'LDP-MST'
-                method_all{j} = 'LDP-MST';
+                method_all{j} = 'FastLDPMST'; 
         end
     end
     
