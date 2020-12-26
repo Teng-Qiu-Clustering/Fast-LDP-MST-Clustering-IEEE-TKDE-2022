@@ -1,5 +1,5 @@
 # FastLDPMST
- FastLDPMST: an efficient density-peak-based clustering method for large-size datasets
+ FastLDPMST: an efficient density-based clustering method for large-size datasets
 
 # Quick start
 **Demo1.m** and **Demo2.m** were successfully tested on Matlab2018
