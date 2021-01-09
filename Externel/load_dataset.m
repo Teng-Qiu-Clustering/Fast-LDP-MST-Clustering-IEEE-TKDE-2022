@@ -8,7 +8,7 @@ elseif any(strcmp(dataName,{'cytof_h1','cytof_h2','cytof_one','Samusik_01','Samu
     load([dataName,'.mat'],'data','annotation_data') 
 elseif any(strcmp(dataName,{'gauss_spiral_circle_dataWithLabel','gauss_spiral_circle_data_in_noiseWithLabel','AGG','Flame','Spiral','Jain','2G','2G_unbalance','S1','R15','3Circles','S1_001S1'}))
     load(['Random_permuted_', dataName,'.mat'],'data','annotation_data')
-elseif any(strcmp(dataName,{'data_TB1M'}))
+elseif any(strcmp(dataName,{'data_TB1M','data_SF2M'}))
     load([dataName,'.mat']) % 
     annotation_data = gt;
     data = fea;
