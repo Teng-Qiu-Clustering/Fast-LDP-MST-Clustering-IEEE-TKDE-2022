@@ -2,7 +2,7 @@
 clear;close all;clc
 addpath(genpath(pwd));
 %% Datasets
-data_names={'AGG','Flame','Spiral','Jain','2G','2G_unbalance','S1','R15','3Circles','S1_001S1'};
+data_names={'AGG','Flame','Spiral','Jain','2G','2G_unbalance','S1','R15','3Circles','S1_001S1','data_TB1M'};
 % data_names = {'data_TB1M'}; % a million samples
 % data_names = {'cytof_h2'};
 % data_names = {'PenDigits','MNIST'};
