@@ -47,7 +47,12 @@ t = 1;
 roots_last = roots;
 num_roots_initial = length(roots);
 num_of_edges_in_graph = M - num_roots_initial;  
-num_of_edges_required_to_remove = cluterN - num_roots_initial;
+if cluterN > num_roots_initial
+    num_of_edges_required_to_remove = cluterN - num_roots_initial; 
+else
+    num_of_edges_required_to_remove = 0;
+     warning('there could exist over-partitioning problem; it is suggest to increase the value of parameter k or increase cluster number');
+end
 while cut_edge_num ~= num_of_edges_required_to_remove && t <= num_of_edges_in_graph
     start_node = ind(t);
     end_node = I_base(start_node);

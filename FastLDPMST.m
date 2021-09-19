@@ -1,23 +1,23 @@
-function [c,time] = FastLDPMST(data,clu_num,minsize,initial_max_k,knnMethod)
+function [c,TotalTime,Ini_clusterNum,supk,time_clusterDistance,time_on_MSF,time_on_cutting] = FastLDPMST(data,clu_num,minsize,initial_max_k,knnMethod)
 %Input:
 %  data: data set (nrow: samples; col: features);
 %  clu_num: number of clusters;
 %Output:
 %  c: cluster label vector;
-%  time: running time (seconds);
+%  TotalTime: running time (seconds);
 
 % Written by Teng Qiu (UESTC)
 
 %%
 [N,dim]=size(data);
 if nargin < 2
-     error('at least two inputs are needed');
-end  
+    error('at least two inputs are needed');
+end
 if nargin < 3
     minsize = 0.018*N;
-end 
+end
 if nargin < 4
-   initial_max_k = ceil(log2(N));
+    initial_max_k = ceil(log2(N));
 end
 if nargin < 5
     if dim < 20
@@ -25,99 +25,137 @@ if nargin < 5
     else
         knnMethod = 'hnsw';       disp('hnsw (L2 distance) approximate fast knn searching technique is used for the dataset with Dimension larger than 20')
     end
-end 
+end
 
- 
-tic;
+
+TotalTime_start = tic;
 %% initial clustering by LDP
-[knnIndex,supk,rho,r,rs,c] = LDP_Searching_by_QT(data,knnMethod,initial_max_k);
- 
-A_cores = data(rs,:);
+time_initial_clustering_start = tic;
+[knnIndex,supk,rho,r,rs,c,pr,W] = LDP_Searching_by_QT(data,knnMethod,initial_max_k);
+time_initial_clustering = toc(time_initial_clustering_start);
+disp(['Time Cost on initial clustering (including fast knn): ',num2str(time_initial_clustering),'s']);
+
+A_cores = data(rs,:); 
+clear data
 M = length(rs);
-
-disp('determine the size of each component of the initial forest...'); 
-nc=zeros(1,M);
-[N,~]=size(data);
-for i = 1:N
-    nc(c(i)) = nc(c(i)) + 1;
-end
-% clear data 
- 
-%% determine multiple label matrix ML
-disp('determine multiple label matrix for each node...'); 
-% method 3: vectorization of method 2
-K = supk + 1; 
-ML = sparse(knnIndex(:),c(repmat((1:N)',K,1)),ones(N*K,1),N,M); % Equivalent to: I = knnIndex(:);J = c(repmat((1:N)',K,1));V = ones(N*K,1); ML = sparse(I,J,V,N,M);
-
-%% compute shared sparse distance matrix 1
-disp(['compute distance matrix of size:',num2str(M),' x ',num2str(M),'...']);
-% method 2:
-disp('determine multiple labels of each node...')
-[I,J] = find(ML); % J: cluster label vector, where J(t) is a label of node I(t)
-cell_L = cell(1,N); %cell_L{1,i} is the set of neighboring set showing all the labels of node i
-for t = 1:length(I)
-    cell_L{1,I(t)} = [cell_L{1,I(t)},J(t)]; 
-end
- 
-disp('sum over density...');
-rho_matrix=sparse(M,M);
-count_matrix = sparse(M,M);
-for j = 1:N
-    cell_L_j = cell_L{1,j};
-    cell_L_size = length(cell_L_j);
-    if cell_L_size~= 1 
-        for s=1:cell_L_size-1            
-            for t=s+1:cell_L_size
-                a = max(cell_L_j(s),cell_L_j(t)); b = min(cell_L_j(s),cell_L_j(t));
-                rho_matrix(a,b) = rho_matrix(a,b) + rho(j);
-                count_matrix(a,b) = count_matrix(a,b) + 1;
+Ini_clusterNum = M;
+if M > clu_num
+    disp('determine the size of each component of the initial forest...');
+    nc=zeros(1,M); 
+    for i = 1:N
+        nc(c(i)) = nc(c(i)) + 1;
+    end   
+    
+    %% compute shared sparse distance matrix (containing the following two sub-steps)
+    time_clusterDistance_start = tic;
+    disp('first: determine multiple labels of each node...')
+    K = supk + 1;
+    % method 1 (the following two lines):
+    % ReverseNeighbor_Labels = sparse(knnIndex(:),c(repmat((1:N)',K,1)),ones(N*K,1),N,M);
+    % [I,J] = find(ReverseNeighbor_Labels); % J: cluster label vector, where J(t) is a label of node I(t)
+    % method 2 (the following three lines); Methods 1 and 2 are equvalent in both effectiveness and efficiency
+    Temp = [knnIndex(:),c(repmat((1:N)',K,1))];
+    clear knnIndex;
+    Temp2 = unique(Temp,'rows'); % C = unique(A,'rows') for the matrix A returns the unique rows of A.The rows of the matrix C will be in sorted order.
+    clear Temp;
+    I = Temp2(:,1); J = Temp2(:,2);
+    clear Temp2;
+    % Note: the values in I have been sorted in ascending order in unique function;
+   
+    FirstAppear_idx = zeros(N,1);
+    i =  1; t = 1;
+    FirstAppear_idx(i) = t;
+    for t = 2:length(I)
+        if I(t) ~= I(t-1)           
+            i = i + 1;
+            FirstAppear_idx(i) = t;
+        end 
+    end
+    
+%  the above code is equvalent to (comparable in terms of runtime): FirstAppear_idx(1) = 1; FirstAppear_idx(2:end) = find(I(2:end)-I(1:end-1))+1; 
+        
+    L_size = zeros(N,1);
+    L_size(1:N-1) = FirstAppear_idx(2:end) - FirstAppear_idx(1:end-1);
+    L_size(N) = length(I) + 1 - FirstAppear_idx(end); % note: +1 is necessary here
+    
+    %
+    disp(['Then: compute shared sparse distance matrix of size:',num2str(M),' x ',num2str(M),'...']);
+    
+    Total_Num = sum(L_size.*(L_size - 1))/2;
+    A = zeros(Total_Num,1);
+    B = zeros(Total_Num,1);
+    C = zeros(Total_Num,1); 
+    D = ones(Total_Num,1);
+   
+    tt = 1;
+    for j = 1:N         
+        if L_size(j)~= 1
+            L_j = J(FirstAppear_idx(j):(FirstAppear_idx(j)+L_size(j)-1)); 
+%             L_j = sort(L_j,'descend'); % this has been fulfilled (sorted in ascending order) in by unique function (it makes no difference either in ascending or descending order);
+            for s = 1:L_size(j)-1
+                for t = s+1:L_size(j) 
+                    A(tt) = L_j(s);
+                    B(tt) = L_j(t);
+                    C(tt) = rho(j); 
+                    tt = tt + 1; 
+                end
             end
         end
     end
+    clear I J;
+    rho_matrix= sparse(A,B,C,M,M);
+    count_matrix = sparse(A,B,D,M,M);
+    clear A B C D;
+    [I,J,V] = find(rho_matrix);
+    [~,~,V2] = find(count_matrix);
+    for t = 1:length(I)
+        d=sqrt(sum((A_cores(I(t),:)-A_cores(J(t),:)).^2));
+        V(t) = d/V(t)/V2(t); % slightly faster than V(t) = d/V(t)/count_matrix(I(t),J(t));
+    end
+    
+    time_clusterDistance = toc(time_clusterDistance_start);
+    disp(['Time Cost on compute cluster distance: ',num2str(time_clusterDistance),'s']);
+    %% Construct MSF
+    time_on_MSF_start = tic;
+    disp('Construct MSF on root nodes (rs) only ...');
+    G = graph(I,J,V,M);
+    [T,pred] = minspantree(G,'Type','forest','Method','sparse');
+    ST = sparse(T.Edges.EndNodes(:,1),T.Edges.EndNodes(:,2),T.Edges.Weight,M,M);
+    if any(isnan(pred))
+        % % ****** Note:  there is problem for the output 'pred' when UG is unconnected for matlab 2013; this problem has been modified by matlab 2016 and above
+        error('a higher version of matlab is needed (e.g., matlab 2016 and later version than that)');
+    end
+    % transform MST to in-tree-based MSF
+    disp('transform MSF to in-tree-based MSF...')
+    idx_roots = find(pred == 0);
+    pred(idx_roots) = idx_roots;
+    I_base = pred;
+    W = zeros(1,M);
+    for i = 1:M
+        W(i) = max(ST(i,I_base(i)),ST(I_base(i),i));
+    end
+    time_on_MSF = toc(time_on_MSF_start);
+    disp(['Time Cost on building in-tree-based MSF: ',num2str(time_on_MSF),'s']);
+    %% Cut the tree
+    disp('Cut the tree...')
+    time_on_cutting_start = tic;
+    cores_cl = Cut_MST_QT_v2(I_base,W,nc,minsize,clu_num);
+    time_on_cutting = toc(time_on_cutting_start);
+    disp(['Time Cost on cutting: ',num2str(time_on_cutting),'s'])
+    %% final cluster assignment
+    disp('final cluster assignment...');
+    c=zeros(N,1);
+    c(rs)=cores_cl;
+    c=c(r);
+else
+    disp('the initially generated number of clusters is too small, and thus there is no need to merge the clusters')
+    c = Cut_MST_QT_v2(pr',W,ones(N,1),minsize,clu_num);
 end
- 
-%% compute shared sparse distance matrix 2
-disp(['compute shared sparse distance matrix of size:',num2str(M),' x ',num2str(M),'...']);
-[I,J,V] = find(rho_matrix);
-[~,~,V2] = find(count_matrix);
-for t = 1:length(I)
-    d=sqrt(sum((A_cores(I(t),:)-A_cores(J(t),:)).^2)); 
-    V(t) = d/V(t)/V2(t);
-end
- G = graph(I,J,V,M); 
-  
-%% Construct MSF
-disp('Construct MSF on root nodes (rs) only ...');
-[T,pred] = minspantree(G,'Type','forest','Method','sparse');
 
-ST = sparse(T.Edges.EndNodes(:,1),T.Edges.EndNodes(:,2),T.Edges.Weight,M,M);
-if any(isnan(pred))
-    % % ****** Note:  there is problem for the output 'pred' when UG is unconnected for matlab 2013; this problem has been modified by matlab 2016 and above
-    error('a higher version of matlab is needed (e.g., matlab 2016 and later version than that)');
-end 
 
-%% transform MST to in-tree-based MSF
-disp('transform MSF to in-tree-based MSF...')
-idx_roots = find(pred == 0);
-pred(idx_roots) = idx_roots;
-I_base = pred;
-W = zeros(1,M); 
-for i = 1:M
-W(i) = max(ST(i,I_base(i)),ST(I_base(i),i));
-end
-
-%% Cut the tree
-disp('Cut the tree...') 
-cores_cl = Cut_MST_QT_v2(I_base,W,nc,minsize,clu_num);
-
-%% final cluster assignment 
-disp('final cluster assignment...');
-c=zeros(N,1);
-c(rs)=cores_cl;
-c=c(r);
- 
-disp('End'); 
-time=toc; 
+TotalTime=toc(TotalTime_start);
+disp(['Time Cost on whole method: ',num2str(TotalTime),'s']);
+disp('End');
 end
 
 

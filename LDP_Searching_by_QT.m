@@ -1,4 +1,4 @@
-function [neighborIds,supk,rho,r,rs,c] = LDP_Searching_by_QT(data,knnMethod,initial_max_k)
+function [neighborIds,supk,rho,r,rs,c,pr,W] = LDP_Searching_by_QT(data,knnMethod,initial_max_k)
 % Written by Teng Qiu (UESTC)
 % InPut:
 %    data: data set;
@@ -9,8 +9,11 @@ function [neighborIds,supk,rho,r,rs,c] = LDP_Searching_by_QT(data,knnMethod,init
 %    rho: density vector; r: root label vector; c: cluster label vector; 
 
 %%
+[N,~]=size(data);
 disp('determine the inital k nearest neighbors...');
 distance_function = 'euclidean';
+disp(['knnMethod: ', knnMethod])
+time_on_fastKNN_start = tic;
 switch knnMethod
     case 'kd_tree'
         % Note 1: knnsearch uses the exhaustive search method by default to find the k-nearest neighbors: The number of columns of X is more than 10.
@@ -20,14 +23,39 @@ switch knnMethod
         [neighborIds, knnD] = knnsearch(constructed_search_tree,data,'k',initial_max_k);
     case 'hnsw'
         file_name = 'HnswConstructionforCurrentData'; % file_name can be named in other ways that one like.
-        MatlabHnswConstruct(single(data),file_name,distance_function); % for hnsw, its distance function only supports: 'euclidean','l2','cosine','ip';
+         MatlabHnswConstruct(single(data),file_name,distance_function); % for hnsw, its distance function only supports: 'euclidean','l2','cosine','ip';
         [neighborIds, knnD] = MatlabHnswSearch(single(data),initial_max_k,file_name,distance_function);
         neighborIds = double(neighborIds);
         knnD = double(knnD);
+        % Note: we find that hnsw cannot guarantee that the 1st nearest neighbor of a
+        % node is itself.The following loop is used to remedy this bug in hnsw.  
+        for i=1:N
+            if neighborIds(i,1) ~= i
+                neighborIds(i,2:end) = neighborIds(i,1:end-1);
+                neighborIds(i,1) = i;
+                knnD(i,2:end) = knnD(i,1:end-1);
+                knnD(i,1) = 0;
+            end
+        end  
+    case 'NNDescent' % initialized by RP trees
+        [neighborIds, knnD] = KnnFind.Approximate(double(data),[],'K',initial_max_k);
+    case 'RP_kdTree'
+        Reduced_Dim = 10;
+        T=rand(size(data,2),Reduced_Dim);
+        %   Second type of RP
+        T(T<(1/3))=-sqrt(3);
+        T(T>=(2/3))= sqrt(3);
+        T(T<(2/3)&T>=(1/3))=sqrt(3);
+        data=data*T/sqrt(Reduced_Dim);
+        
+         constructed_search_tree = createns(data,'NSMethod','kdtree','Distance',distance_function);
+        [neighborIds, knnD] = knnsearch(constructed_search_tree,data,'k',initial_max_k);
 end
+time_on_fastKNN = toc(time_on_fastKNN_start);
+disp(['Time Cost on fast knn: ',num2str(time_on_fastKNN),'s']);
 %% Search natural neighbors
 disp('Search natural neighbors...');  
-[N,~]=size(data);
+
 nb=zeros(1,N); 
 supk=1; count1=0;   
 while 1
@@ -52,16 +80,18 @@ knnD = knnD(:,1:supk+1);
 %% Search local density peaks
 disp('Search local density peaks...');
 dist_sum = sum(knnD,2);
-rho=nb./dist_sum'; 
+rho=nb./(dist_sum'+eps); 
  
 [~,max_ind] = max(rho(neighborIds),[],2);
-pr=zeros(N,1);
+pr =zeros(N,1);
+W = zeros(N,1);
 for i=1:N
     pr(i) = neighborIds(i,max_ind(i));
+    W(i) = knnD(i,max_ind(i));
 end
 %% find root for each node
 disp('find root for each node...');  
-rs = [];
+rs = find(pr == (1:N)'); % rs: i.e., root node vector
 r = pr;
 for i = 1:N
     if r(i)~=i
@@ -72,8 +102,6 @@ for i = 1:N
             passed_nodes = [passed_nodes,parent];
         end
         r(passed_nodes)=parent; % update root label
-    else
-        rs = [rs,i]; % rs: i.e., root node vector
     end
 end
 %% initial clustering labeling
