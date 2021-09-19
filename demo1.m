@@ -15,7 +15,7 @@ for name_id=1:length(data_names)
     clear data annotation_data
     dataName = data_names{name_id};
     disp([num2str(name_id),', ',dataName,':'])
-    [data,annotation_data,ClustN,dataName] = load_dataset(dataName);
+    [data,annotation_data,ClustN,dataName] = load_data(dataName);
     [N,dim]=size(data);
     
     %% parameter setting

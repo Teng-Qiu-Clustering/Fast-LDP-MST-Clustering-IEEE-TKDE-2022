@@ -1,4 +1,4 @@
-function [c,TotalTime,Ini_clusterNum,supk,time_clusterDistance,time_on_MSF,time_on_cutting] = FastLDPMST(data,clu_num,minsize,initial_max_k,knnMethod)
+function [c,TotalTime,Ini_clusterNum,supk,time_clusterDistance,time_on_MSF,time_on_cutting] = FastLDPMST(data,clu_num,minsize,initial_max_k,knnMethod,dataName)
 %Input:
 %  data: data set (nrow: samples; col: features);
 %  clu_num: number of clusters;
@@ -31,7 +31,7 @@ end
 TotalTime_start = tic;
 %% initial clustering by LDP
 time_initial_clustering_start = tic;
-[knnIndex,supk,rho,r,rs,c,pr,W] = LDP_Searching_by_QT(data,knnMethod,initial_max_k);
+[knnIndex,supk,rho,r,rs,c,pr,W] = LDP_Searching_by_QT(data,knnMethod,initial_max_k,dataName);
 time_initial_clustering = toc(time_initial_clustering_start);
 disp(['Time Cost on initial clustering (including fast knn): ',num2str(time_initial_clustering),'s']);
 

@@ -1,4 +1,4 @@
-function [neighborIds,supk,rho,r,rs,c,pr,W] = LDP_Searching_by_QT(data,knnMethod,initial_max_k)
+function [neighborIds,supk,rho,r,rs,c,pr,W] = LDP_Searching_by_QT(data,knnMethod,initial_max_k,dataName)
 % Written by Teng Qiu (UESTC)
 % InPut:
 %    data: data set;
@@ -22,8 +22,8 @@ switch knnMethod
         constructed_search_tree = createns(data,'NSMethod','kdtree','Distance',distance_function);
         [neighborIds, knnD] = knnsearch(constructed_search_tree,data,'k',initial_max_k);
     case 'hnsw'
-        file_name = 'HnswConstructionforCurrentData'; % file_name can be named in other ways that one like.
-         MatlabHnswConstruct(single(data),file_name,distance_function); % for hnsw, its distance function only supports: 'euclidean','l2','cosine','ip';
+        file_name = ['HnswConstructionforCurrentData',dataName]; % file_name can be named in other ways that one like.
+        MatlabHnswConstruct(single(data),file_name,distance_function); % for hnsw, its distance function only supports: 'euclidean','l2','cosine','ip';
         [neighborIds, knnD] = MatlabHnswSearch(single(data),initial_max_k,file_name,distance_function);
         neighborIds = double(neighborIds);
         knnD = double(knnD);
