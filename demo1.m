@@ -59,6 +59,7 @@ for name_id=1:length(data_names)
         Result_all(record_num).time = [sprintf('%.3f',time),'sec']; 
         Result_all(record_num).method = method;
         disp([Result_all(record_num).dataName, ',  Runtime = ',sprintf('%.3f',time),'sec'])
+		disp(" "); disp(" ");
     end
 end
 %% show all results
