@@ -156,3 +156,4 @@ for name_id = 1:length(data_names)
 end
 legend(strrep(method_names,'_','\_'),'FontSize',fonS+2,'Position', [0.31,0.01,0.43,0.03],'Units', 'normalized','Orientation','horizontal')
  
+saveas(gcf,'demo2_result.png')
