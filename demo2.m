@@ -111,9 +111,8 @@ for name_id = 1:length(data_names)
         method = method_names{method_id};
         id = find(strcmp(method_all, method));
         x = 2.^exponents; 
-        y = time_all(id);
-        xx = x(1:end); yy = y(1:end);        
-        loglog(xx,yy,'-','Marker',markers{mod(method_id,numel(markers))},'MarkerSize',7);
+        y = time_all(id);     
+        loglog(x,y,'-','Marker',markers{mod(method_id,numel(markers))},'MarkerSize',7);
       
         hold on
     end
@@ -138,9 +137,8 @@ for name_id = 1:length(data_names)
         method = method_names{method_id};
         id = find(strcmp(method_all, method));
         x = 2.^exponents;
-        y = ARI_all(id);
-        xx = x(1:end); yy = y(1:end);
-        semilogx(xx,yy,'-','Marker',markers{mod(method_id,numel(markers))},'MarkerSize',7);
+        y = ARI_all(id); 
+        semilogx(x,y,'-','Marker',markers{mod(method_id,numel(markers))},'MarkerSize',7);
        
         hold on
     end

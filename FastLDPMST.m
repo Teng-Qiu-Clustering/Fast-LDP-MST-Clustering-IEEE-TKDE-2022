@@ -26,7 +26,9 @@ if nargin < 5
         knnMethod = 'hnsw';       disp('hnsw (L2 distance) approximate fast knn searching technique is used for the dataset with Dimension larger than 20')
     end
 end
-
+if nargin < 6
+    dataName = '__';
+end
 
 TotalTime_start = tic;
 %% initial clustering by LDP
@@ -63,34 +65,36 @@ if M > clu_num
     % Note: the values in I have been sorted in ascending order in unique function;
    
     FirstAppear_idx = zeros(N,1);
-    i =  1; t = 1;
-    FirstAppear_idx(i) = t;
+    FirstAppear_value = zeros(N,1);
+    L_size = zeros(N,1);
+    i =  1;  
+    FirstAppear_idx(i) = 1;
+    FirstAppear_value(i) = I(1);  %% note: in most cases (i.e., if knnIndex(j,1)= j,for all j = 1 to N), FirstAppear_value(j) = j, for all j = 1 to N;
     for t = 2:length(I)
         if I(t) ~= I(t-1)           
             i = i + 1;
+            FirstAppear_value(i) = I(t);
             FirstAppear_idx(i) = t;
+            L_size(FirstAppear_value(i-1)) = FirstAppear_idx(i) - FirstAppear_idx(i-1);
         end 
-    end
+    end   
+    L_size(FirstAppear_value(i)) = length(I) + 1 - FirstAppear_idx(i); % note: +1 is necessary here
+ 
+    % note: in most cases (i.e., if knnIndex(j,1)= j,for all j = 1 to N), i = N
     
-%  the above code is equvalent to (comparable in terms of runtime): FirstAppear_idx(1) = 1; FirstAppear_idx(2:end) = find(I(2:end)-I(1:end-1))+1; 
-        
-    L_size = zeros(N,1);
-    L_size(1:N-1) = FirstAppear_idx(2:end) - FirstAppear_idx(1:end-1);
-    L_size(N) = length(I) + 1 - FirstAppear_idx(end); % note: +1 is necessary here
-    
-    %
     disp(['Then: compute shared sparse distance matrix of size:',num2str(M),' x ',num2str(M),'...']);
     
     Total_Num = sum(L_size.*(L_size - 1))/2;
     A = zeros(Total_Num,1);
     B = zeros(Total_Num,1);
     C = zeros(Total_Num,1); 
-    D = ones(Total_Num,1);
+%     D = ones(Total_Num,1);
    
     tt = 1;
-    for j = 1:N         
+    for m = 1:i
+        j = FirstAppear_value(m);
         if L_size(j)~= 1
-            L_j = J(FirstAppear_idx(j):(FirstAppear_idx(j)+L_size(j)-1)); 
+            L_j = J(FirstAppear_idx(m):(FirstAppear_idx(m)+L_size(j)-1)); 
 %             L_j = sort(L_j,'descend'); % this has been fulfilled (sorted in ascending order) in by unique function (it makes no difference either in ascending or descending order);
             for s = 1:L_size(j)-1
                 for t = s+1:L_size(j) 
@@ -103,22 +107,39 @@ if M > clu_num
         end
     end
     clear I J;
-    rho_matrix= sparse(A,B,C,M,M);
-    count_matrix = sparse(A,B,D,M,M);
-    clear A B C D;
-    [I,J,V] = find(rho_matrix);
-    [~,~,V2] = find(count_matrix);
-    for t = 1:length(I)
-        d=sqrt(sum((A_cores(I(t),:)-A_cores(J(t),:)).^2));
+    % method 1
+%     rho_matrix= sparse(A,B,C,M,M);
+%     count_matrix = sparse(A,B,D,M,M);
+%     clear A B C D;
+%     [I,J,V] = find(rho_matrix);
+%     [~,~,V2] = find(count_matrix);
+%     for t = 1:length(I)
+%         d=sqrt(sum((A_cores(I(t),:)-A_cores(J(t),:)).^2));
+%         V(t) = d/V(t)/V2(t); % slightly faster than V(t) = d/V(t)/count_matrix(I(t),J(t));
+%     end
+
+% method 2
+    Y = [A,B];
+    [CC,~,IC] = unique(Y,'rows'); % Y = CC(IC,:);
+    L = size(CC,1);
+    V = zeros(L,1);
+    V2 = zeros(L,1);
+    for i = 1:length(IC)
+        V(IC(i)) = V(IC(i)) + C(i);
+        V2(IC(i)) = V2(IC(i)) + 1;
+    end
+    for t = 1:L
+        d=sqrt(sum((A_cores(CC(t,1),:)-A_cores(CC(t,2),:)).^2));
         V(t) = d/V(t)/V2(t); % slightly faster than V(t) = d/V(t)/count_matrix(I(t),J(t));
     end
     
+    
+    G = graph(CC(:,1),CC(:,2),V,M);
     time_clusterDistance = toc(time_clusterDistance_start);
     disp(['Time Cost on compute cluster distance: ',num2str(time_clusterDistance),'s']);
     %% Construct MSF
     time_on_MSF_start = tic;
-    disp('Construct MSF on root nodes (rs) only ...');
-    G = graph(I,J,V,M);
+    disp('Construct MSF on root nodes (rs) only ...');   
     [T,pred] = minspantree(G,'Type','forest','Method','sparse');
     ST = sparse(T.Edges.EndNodes(:,1),T.Edges.EndNodes(:,2),T.Edges.Weight,M,M);
     if any(isnan(pred))
@@ -150,6 +171,10 @@ if M > clu_num
 else
     disp('the initially generated number of clusters is too small, and thus there is no need to merge the clusters')
     c = Cut_MST_QT_v2(pr',W,ones(N,1),minsize,clu_num);
+    time_clusterDistance = nan;
+    time_on_MSF = nan;
+    time_on_cutting = nan;
+    disp('there is no need to merge !!!!!!');
 end
 
 
