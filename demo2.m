@@ -8,8 +8,11 @@ data_names ={'TB', 'SF', 'CC', 'CG', 'Flower'};
 method_names = {'FastLDPMST'};  
 %% start testing
 plot_flag = 1;
+
+Result_all = [];test_num = 1; 
+	
 for name_id=1:length(data_names)
-    Result_all = [];test_num = 1; 
+
     
     for method_id = 1:length(method_names)
         method = method_names{method_id};
@@ -155,5 +158,9 @@ for name_id = 1:length(data_names)
     hold off
 end
 legend(strrep(method_names,'_','\_'),'FontSize',fonS+2,'Position', [0.31,0.01,0.43,0.03],'Units', 'normalized','Orientation','horizontal')
+
+ disp(struct2table(Result_all, 'AsArray', true))
  
+ disp(" "); disp(" ");
+disp('Save plot result to "demo2_result.png" ')
 saveas(gcf,'demo2_result.png')
