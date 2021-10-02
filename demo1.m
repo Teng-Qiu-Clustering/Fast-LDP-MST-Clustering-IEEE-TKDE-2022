@@ -38,6 +38,7 @@ for name_id=1:length(data_names)
             if N>100000,idx = randperm(N,10000);end
             subplot(1,2,1);scatter(data(idx,1),data(idx,2),10,'k','filled'); axis tight; set(gca,'xtick',[],'ytick',[],'FontSize',10,'Linewidth',.01);box on;
             subplot(1,2,2);scatter(data(idx,1),data(idx,2),3,diff_colors(Label(idx),:),'filled'); axis tight; set(gca,'xtick',[],'ytick',[],'FontSize',10,'Linewidth',.01);box on;
+			disp('save plot result as a .png file')
 			saveas(gcf,['demo1_result_',dataName,'.png'])
         end
         
