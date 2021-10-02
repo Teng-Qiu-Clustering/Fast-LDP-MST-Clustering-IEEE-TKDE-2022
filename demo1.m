@@ -1,5 +1,5 @@
 %%
-close all;clc
+close all; 
 addpath(genpath(pwd));
 %% Datasets
 data_names={'AGG','Flame','Spiral','Jain','2G','2G_unbalance','S1','R15','3Circles','S1_001S1','data_TB_32768','data_SF_32768','data_CC_32768','data_CG_32768','data_Flower_32768','data_TB_1000000','data_SF_1000000','data_CC_1000000','data_CG_1000000','data_Flower_1000000'};
