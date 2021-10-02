@@ -74,6 +74,7 @@ for name_id=1:length(data_names)
         end
     end 
     %% save result 
+	 disp(struct2table(Result_all, 'AsArray', true))
     save(['compare_varying_size_',dataName,'.mat'],'Result_all','method_names','data_names','exponents')
 end
  
@@ -87,6 +88,7 @@ subplot_id = 1;
 for name_id = 1:length(data_names) 
     dataName = data_names{name_id};  
     load(['compare_varying_size_',dataName,'.mat']) 
+	delete(['compare_varying_size_',dataName,'.mat'])
     method_all = [];
     data_name_all = [];
     for j = 1:length(Result_all)
