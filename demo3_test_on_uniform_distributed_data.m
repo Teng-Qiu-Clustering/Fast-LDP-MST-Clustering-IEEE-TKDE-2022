@@ -52,7 +52,7 @@ for m_id = 1:length(method_array)
         
         %% randomly permute the orders of samples (this is used to validate whether the test data is sensitive to the sample order for this test dataset);
         N = size(data,1);
-        idx_new = randpermute(N);
+        idx_new = randperm(N);
         data = data(idx_new,:);
         annotation_data = annotation_data(idx_new);
         
