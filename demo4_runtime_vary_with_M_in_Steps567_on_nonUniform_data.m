@@ -162,4 +162,5 @@ for data_id = 1:length(dataNames)
     result_file = ['demo2_result_',dataName,'.png'];
     disp(['Save plot result to ',result_file])
     saveas(gcf,result_file)
+    disp(' '); disp(' ');
 end
