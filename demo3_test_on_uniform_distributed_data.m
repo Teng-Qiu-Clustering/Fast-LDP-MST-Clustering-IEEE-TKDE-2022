@@ -180,4 +180,5 @@ set(gca,'xtick',10.^(2:2:ceil(max(log10(N_array)))))
 
 clear data
 % 
+disp('save figure to "demo3_result.png"');
 saveas(gcf,'demo3_result.png')
