@@ -53,11 +53,7 @@ for m_id = 1:length(method_array)
         end
         
         %% randomly permute the orders of samples (this is used to validate whether the test data is sensitive to the sample order for this test dataset);
-        N = size(data,1);
-        % idx_new = randperm(N);
-        idx_new = 1:N;
-        data = data(idx_new,:);
-        annotation_data = annotation_data(idx_new);
+        N = size(data,1); 
         
         ClustN = length(unique(annotation_data));
         switch method
