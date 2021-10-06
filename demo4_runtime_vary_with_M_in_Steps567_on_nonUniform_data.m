@@ -1,4 +1,4 @@
- 
+ addpath(genpath(pwd));
 N_array = 2.^(14:24);
 method_array = {'FastLDPMST'};
 dataNames = {'TB','SF','CC','CG','Flower'};
