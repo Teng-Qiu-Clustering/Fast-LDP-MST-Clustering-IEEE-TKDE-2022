@@ -13,7 +13,7 @@ for data_id = 1:length(dataNames)
         for i = 1:length(N_array)
             disp(N_array(i))
             
-            file = ['data_',dataName,'_',num2str(N_array(i)),'.mat'];
+            fileName = ['data_',dataName,'_',num2str(N_array(i)),'.mat'];
             if ~exist(fileName,'file')
                 load(fileName)
             else
