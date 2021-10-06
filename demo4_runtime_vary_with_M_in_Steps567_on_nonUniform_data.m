@@ -14,12 +14,13 @@ for data_id = 1:length(dataNames)
             disp(N_array(i))
             
             fileName = ['data_',dataName,'_',num2str(N_array(i)),'.mat'];
-            if ~exist(fileName,'file')
+            if exist(fileName,'file')
                 load(fileName)
             else
                 figure;
                 synthesizeLargescaleDatasets_withArbitrarySizes(dataName,N_array(i));
                 close(gcf)
+				load(fileName)
             end
             
             annotation_data = gt;
