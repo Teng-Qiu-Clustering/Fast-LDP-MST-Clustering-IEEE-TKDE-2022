@@ -1,4 +1,5 @@
 %% generate data
+addpath(genpath(pwd));
 disp('generate the test dataset (if this demo is first ran)');
 dim = 1;  % dim can be either 1 or 2;
 N_array = 2.^(5:22);  
