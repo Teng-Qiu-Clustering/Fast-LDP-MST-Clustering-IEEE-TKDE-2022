@@ -44,7 +44,8 @@ for m_id = 1:length(method_array)
     method = method_array{m_id};
     time = 0;
     for i = 1:length(N_array)
-        disp(N_array(i))         
+	    disp(" ");disp(" ");
+        disp(['Number of samples of the test dataset: num2str(N_array(i))])         
         if dim == 1 
             load(['One_Dim_uniform_data_',num2str(N_array(i)),'.mat'],'data','annotation_data')
         elseif dim == 2
