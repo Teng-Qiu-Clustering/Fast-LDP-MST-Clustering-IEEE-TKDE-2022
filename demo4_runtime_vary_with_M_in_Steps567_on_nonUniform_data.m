@@ -1,12 +1,34 @@
+close all;
+addpath(genpath(pwd));
+disp('first generate a set of datasets (by sampling different number of samples from 5 different sampling functions)...')
+data_names ={'TB', 'SF', 'CC', 'CG', 'Flower'};
+for name_id=1:length(data_names)
+    exponents = 14:20;
+    for exponent_id = 1:length(exponents)
+        dataSize = 2.^exponents(exponent_id);
+        dataName = data_names{name_id};
+        disp(['generate dataset: ',dataName,'_',num2str(dataSize),':'])
+        fileName = ['data_',data_names{name_id},'_',num2str(dataSize),'.mat'];
+        if ~exist(fileName,'file')
+            figure;
+            synthesizeLargescaleDatasets_withArbitrarySizes(dataName,dataSize);
+            close(gcf)
+        end
+    end
+end
+
+% start test
+disp('start test...')
+
  addpath(genpath(pwd));
-N_array = 2.^(14:24);
+N_array = 2.^(14:20);
 method_array = {'FastLDPMST'};
 dataNames = {'TB','SF','CC','CG','Flower'};
-M_array = [];
+
 for data_id = 1:length(dataNames)
     dataName =dataNames{data_id};
     disp(dataName);
-    result = []; time = 0;
+    result = []; time = 0; M_array = [];
     for m_id = 1:length(method_array)
         method = method_array{m_id};
         time = 0;
