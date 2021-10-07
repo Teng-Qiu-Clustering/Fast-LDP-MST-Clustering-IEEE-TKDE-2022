@@ -176,6 +176,7 @@ title('  ','FontSize',20)
 legend(method_array,'Position', [0.31,0.92,0.43,0.03],'Units', 'normalized','Orientation','horizontal')
 xlabel('N')
 set(gca,'xtick',10.^(2:2:ceil(max(log10(N_array))))) 
+ylim([0 1.1])
 
 clear data
 % 
