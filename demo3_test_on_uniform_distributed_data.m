@@ -73,9 +73,15 @@ for m_id = 1:length(method_array)
     end
 end
  
-%% 
-h = figure('position',[282.6 240.2 765.4 521.8]); fonS =12;
+%%  
 markers = {'o','+','x','square','v','^','diamond','pentagram'};
+for i = 1:length(method_array)
+    if strcmp(method_array{i},'FastLDPMST_LDPMST')
+        method_array{i} = 'LDP-MST';
+    end
+end
+ 
+h = figure('position',[241.8 241.8 968 520.2]); fonS =12;
  
 subplot(2,3,1);
 p = semilogx(N_array,result(:,:,2)*100./N_array,'o-'); 
@@ -85,85 +91,65 @@ for i = 1:length(method_array)
 end 
 set(gca,'FontSize',fonS);
 xlim([min(N_array)-1,max(N_array) + 10])
-xlabel('N') 
-set(gca,'xtick',10.^(2:2:ceil(max(log10(N_array)))))  
+xlabel('N')
+set(gca,'xtick',10.^(round(min(log10(N_array))):1:ceil(max(log10(N_array))))) 
  
 
 subplot(2,3,2);
-p = loglog(M_array,result(:,:,3),'o-');
+p = loglog(N_array,result(:,:,3),'o-');
 ylabel('Runtime of step 5','FontSize',fonS); 
-hold on; plot(M_array,M_array.*log(M_array),'--k');
-plot(M_array,M_array.*M_array,'-.k');
-text(M_array(10),7*M_array(10).*log(M_array(10)),'M\cdotlog(M)','rotation',15)
-text(M_array(10),7*M_array(10).*M_array(10),'M^2','rotation',30)
-xlim([min(M_array)-1,max(M_array) + 10])
-set(gca,'xtick',10.^(2:2:ceil(max(log10(M_array)))))
-set(gca,'ytick',10.^(0:4:ceil(max(log10(M_array.*M_array)))))
-
+hold on;  
+set(gca,'xtick',10.^(round(min(log10(N_array))):1:ceil(max(log10(N_array)))))  
+set(gca,'ytick',10.^(round(log10(min(min(result(:,:,3))))):1:ceil(max(log10(max(max(result(:,:,3)))))))) 
 set(gca,'FontSize',fonS);
 for i = 1:length(method_array)
     p(i).Marker = markers{i};
 end
-title('  ','FontSize',20)
-xlabel('M')
- 
+title('  ','FontSize',20)  
+xlabel('N') 
+
 subplot(2,3,3);
-p = loglog(M_array,result(:,:,4),'o-');
+p = loglog(N_array,result(:,:,4),'o-');
 ylabel('Runtime of step 6','FontSize',fonS); 
-hold on; 
-plot(M_array,M_array.*log(M_array),'--k');
-plot(M_array,M_array.*M_array,'-.k');
-text(M_array(10),7*M_array(10).*log(M_array(10)),'M\cdotlog(M)','rotation',15)
-text(M_array(10),7*M_array(10).*M_array(10),'M^2','rotation',30)
-xlim([min(M_array)-1,max(M_array) + 10])
-set(gca,'xtick',10.^(2:2:ceil(max(log10(M_array)))))
-set(gca,'ytick',10.^(0:4:ceil(max(log10(M_array.*M_array)))))
-
+hold on;  
+ set(gca,'xtick',10.^(round(min(log10(N_array))):1:ceil(max(log10(N_array)))))  
+ set(gca,'ytick',10.^(round(log10(min(min(result(:,:,4))))):1:ceil(max(log10(max(max(result(:,:,4)))))))) 
 set(gca,'FontSize',fonS);
 for i = 1:length(method_array)
     p(i).Marker = markers{i};
 end
-title('  ','FontSize',20)
-xlabel('M')
+title('  ','FontSize',20) 
+xlabel('N')
 
 subplot(2,3,4);
-p = loglog(M_array,result(:,:,5),'o-');
+p = loglog(N_array,result(:,:,5),'o-');
 ylabel('Runtime of step 7','FontSize',fonS); 
 hold on; 
-plot(M_array,M_array.*log(M_array),'--k');
-plot(M_array,M_array.*M_array,'-.k');
-text(M_array(10),7*M_array(10).*log(M_array(10)),'M\cdotlog(M)','rotation',15)
-text(M_array(10),7*M_array(10).*M_array(10),'M^2','rotation',30)
-xlim([min(M_array)-1,max(M_array) + 10])
- 
-set(gca,'xtick',10.^(2:2:ceil(max(log10(M_array)))))
-set(gca,'ytick',10.^(0:4:ceil(max(log10(M_array.*M_array)))))
-
+  set(gca,'xtick',10.^(round(min(log10(N_array))):1:ceil(max(log10(N_array))))) 
+  set(gca,'ytick',10.^(round(log10(min(min(result(:,:,5))))):1:ceil(max(log10(max(max(result(:,:,5)))))))) 
+  
 set(gca,'FontSize',fonS);
 for i = 1:length(method_array)
     p(i).Marker = markers{i};
-end  
-xlabel('M')
+end
+title('  ','FontSize',20) 
+xlabel('N')
  
 subplot(2,3,5);
-p = loglog(N_array,result(:,:,7),'o-'); 
-hold on; plot(N_array,N_array.*log(N_array),'--k');
-plot(N_array,N_array.*N_array,'-.k'); 
-text(N_array(10),7*N_array(10).*log(N_array(10)),'N\cdotlog(N)','rotation',15)
-text(N_array(10),7*N_array(10).*N_array(10),'N^2','rotation',30)
+p = semilogx(N_array,result(:,:,7),'o-');
+set(gca,'yscale','log');
+hold on;  
 xlabel('N','FontSize',fonS);ylabel('Total runtime','FontSize',fonS);
 for i = 1:length(method_array)
     p(i).Marker = markers{i};
 end
-set(gca,'FontSize',fonS);
-xlim([min(N_array)-1,max(N_array) + 10])
-    set(gca,'xtick',10.^(2:2:ceil(max(log10(N_array))))) 
-    set(gca,'ytick',10.^(0:4:ceil(max(log10(N_array.*N_array))))) 
-%  ylim([min(result(:,7))-0.1,max(result(:,7))])
+set(gca,'FontSize',fonS); 
+set(gca,'xtick',10.^(round(min(log10(N_array))):1:ceil(max(log10(N_array))))) 
+set(gca,'ytick',10.^(round(log10(min(min(result(:,:,7))))):1:ceil(max(log10(max(max(result(:,:,7)))))))) 
 xlabel('N') 
 
 subplot(2,3,6);
-p = loglog(N_array,result(:,:,6),'o-');
+p = semilogx(N_array,result(:,:,6),'o-');
 ylabel('ARI','FontSize',fonS);
 xlim([min(N_array)-1,max(N_array) + 10]) 
 ylim([0 1.1])
@@ -174,8 +160,9 @@ for i = 1:length(method_array)
 end
 title('  ','FontSize',20)
 legend(method_array,'Position', [0.31,0.92,0.43,0.03],'Units', 'normalized','Orientation','horizontal')
-xlabel('N')
-set(gca,'xtick',10.^(2:2:ceil(max(log10(N_array))))) 
+xlabel('N') 
+set(gca,'xtick',10.^(round(min(log10(N_array))):1:ceil(max(log10(N_array))))) 
+ 
 ylim([0 1.1])
 
 clear data
