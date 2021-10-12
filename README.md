@@ -1,8 +1,7 @@
 # FastLDPMST
  FastLDPMST: an efficient density-based clustering method for large-size datasets.
  
-**Summary**: this work contributes to the field of clustering by providing a new solution (i.e., FastLDPMST) which achieves a good balance among effectiveness,
-efficiency, robustness, and user-friendliness. Due to the above merit, FastLDPMST could
+**Summary**: this work contributes to the field of clustering by providing a new solution (i.e., FastLDPMST) which largely improves the efficiency of LDP-MST, without sacrificing the merits of LDP-MST in effectiveness, robustness, and user-friendliness. FastLDPMST achieves a good balance among effectiveness, efficiency, robustness, and user-friendliness, and thus it could
 have a certain degree of practical value in this big data era.
 
 # Quick start
