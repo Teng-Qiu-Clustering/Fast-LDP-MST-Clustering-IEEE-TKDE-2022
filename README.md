@@ -31,8 +31,6 @@ are assigned to. The results on NMI are omitted here, as both methods obtain alm
  **** 
  
  ![Fig.3](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/LDPMST-vs-FastLDPMST_on_GSC.png)
-**Fig.3**: Comparison between FastLDPMST and LDP-MST on two synthetic
-datasets. The first row shows the test datasets, GaSpCi (left) and
-GaSpCiNo (right). The second and third rows show the corresponding
-clustering results obtained by FastLDPMST and LDP-MST, respectively.
+**Fig.3**: Comparison of LDP-MST (2nd column) and FastLDPMST (3rd column)
+on two challenging datasets (1st column).
  
