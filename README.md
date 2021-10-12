@@ -12,7 +12,7 @@ Note:
 
 3) **You can also choose to directly run the code in my code ocean: https://codeocean.com/capsule/3297972/tree/v2**
 
-# Figures
+# Some Results
 
 ![Fig.1](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/LDPMST-vs-FastLDPMST_on_TB_SF_CC_CG_Flower.png)
 **Fig.1**: Comparison of the efficiency of LDP-MST and FastLDPMST. The first and second rows compare the runtime (in seconds) and clustering
