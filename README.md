@@ -48,4 +48,4 @@ on two challenging datasets (1st column).
 parameters: K and eta. Parameter K is used as an early
 termination condition for the number of nearest neighbors; Parameter
 eta is used as a constraint for the cluster size. Note that in this
-study, we do not regard cluster number as a parameter. For each dataset tested in the above figure, we fixed the two parameters k and eta to their emperical values (being log2(N) and 0.018*N, respectively) without careful tuning. 
+study, we do not regard cluster number as a parameter. For each dataset tested in all of the above figures, we fixed the two parameters k and eta to their emperical values (being log2(N) and 0.018*N, respectively) without careful tuning. 
