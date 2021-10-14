@@ -34,7 +34,7 @@ Note:
 ****
 
 ![Fig.2](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/One_Dim_Uniform_V2.png)
-**Fig.2**: Comparison between FastLDPMST and LDP-MST on a set of 1-dimensional uniformly distributed datasets with the numbers of samples varying from N=2^14 to N=2^24. (a) shows how the ratios of the root nodes of the two methods vary with the number of samples, **which indicates that the number of root nodes could be as close as the number of samples in the worst case, which means that when testing such kinds of datasets, the runtime of LDPMST becomes O(N^2) in sharp contrast to ours (with O(N*logN))**. (b), (c) and (d) compare the runtimes of the two methods on three sub-steps. (e) compares the total runtimes (on all the eight steps) of the two methods. **Notably, as shown in (e), when N = 2^14, the total runtime of LDP-MST is 6495.2 seconds while that of FastLDPMST is 0.15 seconds, which means that the speedup factor is as high as 41512. Since the total runtime of LDP-MST increases much rapidly than that of FastLDPMST, the speedup factor would be much higher when N > 2^14**
+**Fig.2**: Comparison between FastLDPMST and LDP-MST on a set of 1-dimensional uniformly distributed datasets with the numbers of samples varying from N=2^14 to N=2^24. (a) shows how the ratios of the root nodes of the two methods vary with the number of samples, **which indicates that the number of root nodes could be as close as the number of samples in the worst case, which means that when testing such kinds of datasets, the runtime of LDPMST becomes O(N^2) in sharp contrast to ours (with O(N*logN))**. (b), (c) and (d) compare the runtimes of the two methods on three sub-steps. (e) compares the total runtimes (on all the eight steps) of the two methods. **Notably, as shown in (e), when N = 2^14, the total runtime of LDP-MST is 6495.2 seconds while that of FastLDPMST is 0.15 seconds, which means that the speedup factor is as high as 41512. Since the total runtime of LDP-MST increases much rapidly than that of FastLDPMST, the speedup factor would be much higher when N > 2^14.**
 
  
  **** 
@@ -43,3 +43,9 @@ Note:
 **Fig.3**: Comparison of LDP-MST (2nd column) and FastLDPMST (3rd column)
 on two challenging datasets (1st column).
  
+  **** 
+**About the parameters:** Like LDP-MST, FastLDPMST contains two
+parameters: K and eta. Parameter K is used as an early
+termination condition for the number of nearest neighbors; Parameter
+eta is used as a constraint for the cluster size. Note that in this
+study, we do not regard cluster number as a parameter. For each dataset tested in the above figure, we fixed the two parameters k and eta to their emperical values (being log2(N) and 0.018*N, respectively) without careful tuning. 
