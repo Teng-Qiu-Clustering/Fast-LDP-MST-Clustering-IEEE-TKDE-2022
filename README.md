@@ -28,13 +28,13 @@ Note:
 
 ![Fig.1](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/LDPMST-vs-FastLDPMST_on_TB_SF_CC_CG_Flower.png)
 **Fig.1**: Comparison between LDP-MST and FastLDPMST on multiple datasets sampled from five different density functions (TB, SF, CC, CG, and Flower). The first and second rows compare the runtime (in seconds) and clustering accuracy
-(ARI scores) of the two methods on a set of datasets with the numbers of samples varying from N=2^14 to N=2^24. For instance, the test datasets with N=2^15 samples are displayed in the third row, where each point represents a sample; the corresponding clustering results of FastLDPMST are shown in the fourth row, where different colors on the points in each dataset indicate different clusters they are assigned to). The NMI scores and the visualization of the clustering results of LDP-MST are omitted here, as both methods obtain almost the same performance.
+(ARI scores) of the two methods on a set of datasets with the numbers of samples varying from N=2^14 to N=2^24. For instance, the test datasets with N=2^15 samples are displayed in the third row, where each point represents a sample; the corresponding clustering results of FastLDPMST are shown in the fourth row, where different colors on the points in each dataset indicate different clusters they are assigned to). The NMI scores and the visualization of the clustering results of LDP-MST are omitted here, as both methods obtain almost the same performance. 
   
  
 ****
 
 ![Fig.2](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/One_Dim_Uniform_V2.png)
-**Fig.2**: Comparison between FastLDPMST and LDP-MST on 1-dimensional uniformly distributed datasets (with 2 clusters).
+**Fig.2**: Comparison between FastLDPMST and LDP-MST on a set of 1-dimensional uniformly distributed datasets with the numbers of samples varying from N=2^14 to N=2^24. (a) shows how the ratios of the root nodes of the two methods vary with the number of samples, **which indicates that the number of root nodes could be as close as the number of samples in the worst case, which means that when testing such kinds of datasets, the runtime of LDPMST becomes O(N^2) in sharp contrast to ours (with O(N*logN))**. (b), (c) and (d) compare the runtimes of the two methods on three sub-steps. (e) compares the total runtimes (on all the eight steps) of the two methods. **Notably, as shown in (e), when N = 2^14, the total runtime of LDP-MST is 6495.2 seconds while that of FastLDPMST is 0.15 seconds, which means that the speedup factor is as high as 41512. Since the total runtime of LDP-MST increases much rapidly than that of FastLDPMST, the speedup factor would be much higher when N > 2^14**
 
  
  **** 
