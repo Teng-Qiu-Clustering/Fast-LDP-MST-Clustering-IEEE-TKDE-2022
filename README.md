@@ -54,4 +54,4 @@ study, we do not regard cluster number as a parameter. For each dataset tested i
 **Fig.4**: Comparison between FastLDPMST and DP (density-peak-based clustering) with different values of k (ranging from 7 to 100 with a step of 1). See examples in Fig. 5.
 
  ![Fig.5](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Compare_visualization_of_clustering_Between_FastLDPMST_and_DP.png)
-**Fig.5**: Comparison between FastLDPMST and DP (density-peak-based clustering) under an emperical value of k. For FastLDPMST, k = log2(N); For DP, except 3Circles (k = 30), on all the other datasets, k = log2(N); there reported an error for DP while testing 3Circles with k = log2(N). 
+**Fig.5**: Comparison between FastLDPMST and DP (density-peak-based clustering) under the emperical value of k. For FastLDPMST, k = log2(N) (eta = 0.018*N); For DP, except dataset 3Circles (k = 30; there reported an error for DP while testing 3Circles with k = log2(N)), on all the other datasets, k = log2(N). 
