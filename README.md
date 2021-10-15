@@ -40,7 +40,7 @@ Note:
  **** 
  
  ![Fig.3](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/LDPMST-vs-FastLDPMST_on_GSC.png)
-**Fig.3**: Comparison of LDP-MST (2nd column) and FastLDPMST (3rd column)
+**Fig.3**: Comparison between LDP-MST (2nd column) and FastLDPMST (3rd column)
 on two challenging datasets (1st column).
  
   **** 
@@ -49,3 +49,9 @@ parameters: K and eta. Parameter K is used as an early
 termination condition for the number of nearest neighbors; Parameter
 eta is used as a constraint for the cluster size. Note that in this
 study, we do not regard cluster number as a parameter. For each dataset tested in all of the above figures, we fixed the two parameters k and eta to their emperical values (being log2(N) and 0.018*N, respectively) without careful tuning. 
+
+ ![Fig.4](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/CompareFastLDPMST_and_DP_with_diff_parameters.png)
+**Fig.4**: Comparison between FastLDPMST and DP (density-peak-based clustering) with different values of k (ranging from 7 to 100 with a step of 1). See examples in Fig. 5.
+
+ ![Fig.5](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Compare_visualization_of_clustering_Between_FastLDPMST_and_DP.png)
+**Fig.5**: Comparison between FastLDPMST and DP (density-peak-based clustering) under an emperical value of k. For FastLDPMST, k = log2(N); For DP, except 3Circles (k = 30), on all the other datasets, k = log2(N); there reported an error for DP while testing 3Circles with k = log2(N). 
