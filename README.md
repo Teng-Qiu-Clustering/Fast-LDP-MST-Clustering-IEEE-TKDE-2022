@@ -48,7 +48,7 @@ on two challenging datasets (1st column).
 parameters: K and eta. Parameter K is used as an early
 termination condition for the number of nearest neighbors; Parameter
 eta is used as a constraint for the cluster size. Note that in this
-study, we do not regard cluster number as a parameter. For each dataset tested in all of the above figures, we fixed the two parameters k and eta to their emperical values (being log2(N) and 0.018*N, respectively) without careful tuning. 
+study, we do not regard cluster number as a parameter. For each dataset tested in all of the above figures, we fixed the two parameters k and eta to their emperical values (being log2(N) and 0.018*N, respectively) without careful tuning. In the following, we will the influence of different values of k (with eta being fixed). 
 
  ![Fig.4](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/CompareFastLDPMST_and_DP_with_diff_parameters.png)
 **Fig.4**: Comparison between FastLDPMST and DP (density-peak-based clustering) with different values of k (ranging from 7 to 100 with a step of 1). See examples in Fig. 5.
