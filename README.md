@@ -28,7 +28,7 @@ Note:
 
 ![Fig.1](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/LDPMST-vs-FastLDPMST_on_TB_SF_CC_CG_Flower.png)
 **Fig.1**: Comparison between LDP-MST and FastLDPMST on multiple datasets sampled from five different density functions (TB, SF, CC, CG, and Flower). The first and second rows compare the runtime (in seconds) and clustering accuracy
-(ARI scores) of the two methods on a set of datasets with the numbers of samples varying from N=2^14 to N=2^24. For instance, the test datasets with N=2^15 samples are displayed in the third row, where each point represents a sample; the corresponding clustering results of FastLDPMST are shown in the fourth row, where different colors on the points in each dataset indicate different clusters they are assigned to). The NMI scores and the visualization of the clustering results of LDP-MST are omitted here, as both methods obtain almost the same performance. ARI: adjusted Rand index (its value ranges
+(ARI scores) of the two methods on a set of datasets with the numbers of samples varying from N=2^14 to N=2^24 (**> 16 million**). For instance, the test datasets with N=2^15 samples are displayed in the third row, where each point represents a sample; the corresponding clustering results of FastLDPMST are shown in the fourth row, where different colors on the points in each dataset indicate different clusters they are assigned to). The NMI scores and the visualization of the clustering results of LDP-MST are omitted here, as both methods obtain almost the same performance. ARI: adjusted Rand index (its value ranges
 from -1 to 1; higher values
 indicate higher clustering accuracy). 
   
