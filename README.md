@@ -49,11 +49,10 @@ on two challenging datasets (1st column). Each point represents a 2-dimensional 
 **About the parameters:** Like LDP-MST, FastLDPMST contains two
 parameters: K and eta. **Both of them have clear physical meaning.** Specifically, parameter K is used as an early
 termination condition for the number of nearest neighbors; Parameter
-eta is used as a constraint for the cluster size. Note that in this
-study, we do not regard cluster number as a parameter. For each dataset tested in all of the above figures, we fixed the two parameters k and eta to their emperical values (being log2(N) and 0.018*N, respectively) without careful tuning. In the following, we will show the influence of different values of k (with eta being fixed as its emperical value). 
+eta is used as a constraint for the cluster size. For each dataset tested in all of the above figures, we fixed the two parameters k and eta to their emperical values. The following figure (Fig. 4) shows the influence of different values of k (Fig. 4); see the cluster structure of the test dataset in Fig. 5. 
 
- ![Fig.4](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/CompareFastLDPMST_and_DP_with_diff_parameters.png)
-**Fig.4**: Comparison between FastLDPMST and DP (density-peak-based clustering) with different values of k (ranging from 7 to 100 with a step of 1). See examples in Fig. 5.
+ ![Fig.4](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/CompareFastLDPMST_and_DP_with_diff_parameters_V2.png)
+**Fig.4**: Comparison between FastLDPMST and DP (density-peak-based clustering) with different values of k (ranging from 7 to 100 with a step of 2). 
 
- ![Fig.5](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Compare_visualization_of_clustering_Between_FastLDPMST_and_DP.png)
-**Fig.5**: Comparison between FastLDPMST and DP (density-peak-based clustering) under the emperical value of k. For FastLDPMST, k = log2(N) (eta = 0.018*N); For DP, except dataset 3Circles (k = 30; there reported an error for DP while testing 3Circles with k = log2(N)), on all the other datasets, k = log2(N). 
+ ![Fig.5](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Plot_of_Synthetic_datasets.png)
+**Fig.5**: Illustration of the test datasets. 
