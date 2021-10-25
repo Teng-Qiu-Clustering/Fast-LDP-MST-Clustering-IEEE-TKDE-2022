@@ -49,7 +49,7 @@ on two challenging datasets (1st column). Each point represents a 2-dimensional 
 **About the parameters:** Like LDP-MST, FastLDPMST contains two
 parameters: K and eta. **Both of them have clear physical meaning.** Specifically, parameter K is used as an early
 termination condition for the number of nearest neighbors; Parameter
-eta is used as a constraint for the cluster size. For each dataset tested in all of the above figures, we fixed the two parameters k and eta to their emperical values. The following figure (Fig. 4) shows the influence of different values of k (Fig. 4); see the cluster structure of the test dataset in Fig. 5. 
+eta is used as a constraint for the cluster size. For each dataset tested in all of the above figures, we fixed the two parameters k and eta to their emperical values. The following figure (Fig. 4) shows the influence of different values of k; see the cluster structures of the test datasets in Fig. 5. 
 
  ![Fig.4](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/CompareFastLDPMST_and_DP_with_diff_parameters_V2.png)
 **Fig.4**: Comparison between FastLDPMST and DP (density-peak-based clustering) with different values of k (ranging from 7 to 100 with a step of 2). 
