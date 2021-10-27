@@ -49,13 +49,13 @@ on two challenging datasets (1st column). Each point represents a 2-dimensional 
 **About the parameters:** Like LDP-MST, FastLDPMST contains two
 parameters: K and eta. **Both of them have clear physical meaning.** Specifically, parameter K is used as an early
 termination condition for the number of nearest neighbors; Parameter
-eta is used as a constraint for the cluster size. For each dataset tested in all of the above figures, we fixed the two parameters k and eta to their emperical values. The following figure (Fig. 4) shows the influence of different values of k; see the cluster structures of the test datasets in Fig. 5 and illustration of the clustering results in Fig. 6. 
+eta is used as a constraint for the cluster size. For each dataset tested in all of the above figures, we fixed the two parameters k and eta to their emperical values. For each of tHE following fifteen datasets in Fig. 4, we compare DP (density-peak-based clustering) and FastLDPMST with different values of k; see the results in Fig. 5 and examples of the clustering results (k = 30) in Fig. 6. 
 
- ![Fig.4](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/CompareFastLDPMST_and_DP_with_diff_parameters_V2.png)
-**Fig.4**: Comparison between FastLDPMST and DP (density-peak-based clustering) on fifteen datasets (see Fig. 5) with different values of k (ranging from 7 to 100 with a step of 2). 
+ ![Fig.4](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Plot_of_Synthetic_datasets.png)
+**Fig.4**: Illustration of the test datasets. 
 
- ![Fig.5](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Plot_of_Synthetic_datasets.png)
-**Fig.5**: Illustration of the test datasets. 
+ ![Fig.5](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/CompareFastLDPMST_and_DP_with_diff_parameters_V2.png)
+**Fig.5**: Comparison between FastLDPMST and DP (density-peak-based clustering) on fifteen datasets (see Fig. 4) with different values of k (ranging from 7 to 100 with a step of 2). 
 
- ![Fig.6](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Result_of_FastLDPMST_DP_with_k_30.png)
+![Fig.6](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Result_of_FastLDPMST_DP_with_k_30.png)
 **Fig.6**: Examples of the clustering results of DP and FastLDPMST on each test dataset in Fig. 5. 
