@@ -57,5 +57,5 @@ eta is used as a constraint for the cluster size. For each dataset tested in all
  ![Fig.5](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Plot_of_Synthetic_datasets.png)
 **Fig.5**: Illustration of the test datasets. 
 
- ![Fig.6](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Result_of_FastLDPMST_DP.png)
+ ![Fig.6](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Result_of_FastLDPMST_DP_with_k_30.png)
 **Fig.6**: Examples of the clustering results of DP and FastLDPMST on each test dataset in Fig. 5. 
