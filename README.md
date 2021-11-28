@@ -31,31 +31,25 @@ Note:
 (ARI scores) of the two methods on a set of datasets with the numbers of samples varying from N=2^14 to N=2^24 (**> 16 million**). For instance, the test datasets with N=2^15 samples are displayed in the third row, where each point represents a sample; the corresponding clustering results of FastLDPMST are shown in the fourth row, where different colors on the points in each dataset indicate different clusters they are assigned to). The NMI scores and the visualization of the clustering results of LDP-MST are omitted here, as both methods obtain almost the same performance. ARI: adjusted Rand index (its value ranges
 from -1 to 1; higher values
 indicate higher clustering accuracy). 
-  
  
-****
-
-![Fig.2](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/One_Dim_Uniform_V2.png)
-**Fig.2**: Comparison between FastLDPMST and LDP-MST on a set of 1-dimensional uniformly distributed datasets with the numbers of samples varying from N=2^14 to N=2^24 (**> 16 million**). (a) shows how the ratios of the root nodes of the two methods vary with the number of samples, **which indicates that the number of root nodes could be as close as the number of samples in the worst case, which means that when testing such kinds of datasets, the runtime of LDPMST becomes O(N^2) in sharp contrast to ours (with O(N*logN))**. (b), (c) and (d) compare the runtimes of the two methods on three sub-steps. (e) compares the total runtimes (on all the eight steps) of the two methods. **Notably, as shown in (e), when N = 2^14, the total runtime of LDP-MST is 6495.2 seconds while that of FastLDPMST is 0.15 seconds, which means that the speedup factor is as high as 41512. Since the total runtime of LDP-MST increases much rapidly than that of FastLDPMST, the speedup factor would be much higher when N > 2^14.**
-
  
  **** 
  
- ![Fig.3](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/LDPMST-vs-FastLDPMST_on_GSC.png)
-**Fig.3**: Comparison between LDP-MST (2nd column) and FastLDPMST (3rd column)
+ ![Fig.2](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/LDPMST-vs-FastLDPMST_on_GSC.png)
+**Fig.2**: Comparison between LDP-MST (2nd column) and FastLDPMST (3rd column)
 on two challenging datasets (1st column). Each point represents a 2-dimensional sample. Different colors (in 2nd and 3rd columns) on points indicate different clustering labels assigned by the clustering methods. 
  
   **** 
 **About the parameters:** Like LDP-MST, FastLDPMST contains two
 parameters: K and eta. **Both of them have clear physical meaning.** Specifically, parameter K is used as an early
 termination condition for the number of nearest neighbors; Parameter
-eta is used as a constraint for the cluster size. For each dataset tested in all of the above figures, we fixed the two parameters k and eta to their emperical values. For each of the following fifteen datasets in Fig. 4, we compare DP (density-peak-based clustering) and FastLDPMST with different values of k; see the results in Fig. 5 and examples of the clustering results (k = 30) in Fig. 6. 
+eta is used as a constraint for the cluster size. For each dataset tested in all of the above figures, we fixed the two parameters k and eta to their emperical values. For each of the following fifteen datasets in Fig. 3, we compare DP (density-peak-based clustering) and FastLDPMST with different values of k; see the results in Fig. 4 and examples of the clustering results (k = 30) in Fig. 5. 
 
- ![Fig.4](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Plot_of_Synthetic_datasets.png)
-**Fig.4**: Illustration of the test datasets. 
+ ![Fig.3](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Plot_of_Synthetic_datasets.png)
+**Fig.3*: Illustration of the test datasets. 
 
- ![Fig.5](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/CompareFastLDPMST_and_DP_with_diff_parameters_V2.png)
-**Fig.5**: Comparison between FastLDPMST and DP (density-peak-based clustering) on fifteen datasets (see Fig. 4) with different values of k (ranging from 7 to 100 with a step of 2). 
+ ![Fig.4](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/CompareFastLDPMST_and_DP_with_diff_parameters_V2.png)
+**Fig.4**: Comparison between FastLDPMST and DP (density-peak-based clustering) on fifteen datasets (see Fig. 3) with different values of k (ranging from 7 to 100 with a step of 2). 
 
-![Fig.6](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Result_of_FastLDPMST_DP_with_k_30.png)
-**Fig.6**: Examples of the clustering results of DP and FastLDPMST on each test dataset in Fig. 5. 
+![Fig.5](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Result_of_FastLDPMST_DP_with_k_30.png)
+**Fig.5**: Examples of the clustering results of DP and FastLDPMST on each test dataset in Fig. 4. 
