@@ -28,35 +28,8 @@ switch knnMethod
             [neighborIds, knnD] = knnsearch(constructed_search_tree,data,'k',initial_max_k);
             neighborIds = single(neighborIds);
         end
-    case 'hnsw'
-        file_name = ['HnswConstructionforCurrentData',dataName]; % file_name can be named in other ways that one like.
-        MatlabHnswConstruct(single(data),file_name,distance_function); % for hnsw, its distance function only supports: 'euclidean','l2','cosine','ip';
-        [neighborIds, knnD] = MatlabHnswSearch(single(data),initial_max_k,file_name,distance_function);
-        neighborIds = double(neighborIds);
-        knnD = double(knnD);
-        % Note: we find that hnsw cannot guarantee that the 1st nearest neighbor of a
-        % node is itself.The following loop is used to remedy this bug in hnsw.  
-%         for i=1:N
-%             if neighborIds(i,1) ~= i
-%                 neighborIds(i,2:end) = neighborIds(i,1:end-1);
-%                 neighborIds(i,1) = i;
-%                 knnD(i,2:end) = knnD(i,1:end-1);
-%                 knnD(i,1) = 0;
-%             end
-%         end  
     case 'NNDescent' % initialized by RP trees
-        [neighborIds, knnD] = KnnFind.Approximate(double(data),[],'K',initial_max_k);
-    case 'RP_kdTree'
-        Reduced_Dim = 10;
-        T=rand(size(data,2),Reduced_Dim);
-        %   Second type of RP
-        T(T<(1/3))=-sqrt(3);
-        T(T>=(2/3))= sqrt(3);
-        T(T<(2/3)&T>=(1/3))=sqrt(3);
-        data=data*T/sqrt(Reduced_Dim);
-        
-         constructed_search_tree = createns(data,'NSMethod','kdtree','Distance',distance_function);
-        [neighborIds, knnD] = knnsearch(constructed_search_tree,data,'k',initial_max_k);
+        [neighborIds, knnD] = KnnFind.Approximate(double(data),[],'K',initial_max_k); 
 end
 
 time_on_fastKNN = toc(time_on_fastKNN_start);

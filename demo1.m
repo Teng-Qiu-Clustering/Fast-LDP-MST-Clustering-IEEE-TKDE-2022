@@ -2,7 +2,7 @@
 close all; 
 addpath(genpath(pwd));
 %% Datasets
-data_names={'AGG','Flame','Spiral','Jain','2G','2G_unbalance','S1','R15','3Circles','S1_001S1','data_TB_32768','data_SF_32768','data_CC_32768','data_CG_32768','data_Flower_32768','data_TB_1000000','data_SF_1000000','data_CC_1000000','data_CG_1000000','data_Flower_1000000'};
+data_names={'AGG','Flame','Spiral','Jain','2G','2G_unbalance','S1','R15','3Circles','data_TB_32768','data_SF_32768','data_CC_32768','data_CG_32768','data_Flower_32768','data_TB_1000000','data_SF_1000000','data_CC_1000000','data_CG_1000000','data_Flower_1000000'};
 % data_names = {'data_TB1M'}; % a million samples
 % data_names = {'cytof_h2'};
 % data_names = {'PenDigits','MNIST'};
@@ -19,7 +19,7 @@ for name_id=1:length(data_names)
     [N,dim]=size(data);
     
     %% parameter setting
-    ratio = 0.018; %  [0.01,0.02] is recommended; not needed for manual cutting; 
+    ratio = 0.01; %  [0.01,0.02] is recommended; not needed for manual cutting; 
     mS=ratio*N; % Note: parameter mS (i.e.,the minimal cluster size) is dependent on ratio;
     K = ceil(log2(N)); 
      %% compare different methods
