@@ -14,16 +14,16 @@ if nargin < 2
     error('at least two inputs are needed');
 end
 if nargin < 3
-    minsize = 0.018*N;
+    minsize = 0.01*N;
 end
 if nargin < 4
     initial_max_k = ceil(log2(N));
 end
 if nargin < 5
-    if dim < 20
+    if dim <= 10
         knnMethod = 'kd_tree';       disp('kd-tree exact fast knn searching technique is used for the dataset with Dimension lower than 20')
     else
-        knnMethod = 'hnsw';       disp('hnsw (L2 distance) approximate fast knn searching technique is used for the dataset with Dimension larger than 20')
+        knnMethod = 'NNDescent';       disp('hnsw (L2 distance) approximate fast knn searching technique is used for the dataset with Dimension larger than 20')
     end
 end
 if nargin < 6

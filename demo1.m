@@ -2,10 +2,8 @@
 close all; 
 addpath(genpath(pwd));
 %% Datasets
-data_names={'AGG','Flame','Spiral','Jain','2G','2G_unbalance','S1','R15','3Circles','data_TB_32768','data_SF_32768','data_CC_32768','data_CG_32768','data_Flower_32768','data_TB_1000000','data_SF_1000000','data_CC_1000000','data_CG_1000000','data_Flower_1000000'};
-% data_names = {'data_TB1M'}; % a million samples
-% data_names = {'cytof_h2'};
-% data_names = {'PenDigits','MNIST'};
+data_names={'A3','S1','UB','2G','Spiral','Jain','3Circles','AGG','Flame','gauss_spiral_circle_dataWithLabel','data_TB_10000','data_SF_10000','data_CC_10000', 'data_CG_10000', 'data_Flower_10000','data_TB_1000000','data_SF_1000000','data_CC_1000000','data_CG_1000000','data_Flower_1000000','PenDigits','MNIST','cytof_h2'};
+ 
 %% Methods
 method_names = {'FastLDPMST'};   
 %% Start Testing
