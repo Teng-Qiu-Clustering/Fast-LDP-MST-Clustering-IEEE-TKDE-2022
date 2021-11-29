@@ -56,7 +56,7 @@ t = 1;
 roots_last = roots;
 num_roots_initial = length(roots);
 num_of_edges_in_graph = M - num_roots_initial;  
-if cluterN > num_roots_initial
+if cluterN >= num_roots_initial
     num_of_edges_required_to_remove = cluterN - num_roots_initial; 
 else
     num_of_edges_required_to_remove = 0;
