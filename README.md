@@ -15,12 +15,7 @@ have a certain degree of practical value in this big data era.
 
 # Quick start
 **Demo1.m** and **Demo2.m** were successfully tested on Matlab2018 (on a computer with a 3 GHz Intel i5 processor and 32 GB RAM). 
-
-Note:
-
-1) for **Demo 2**, the clustering results may be different in different runs, because the test datasets in Demo2 are randomly sampled from some density functions (i.e., the test datasets are different in different runs). Note that the proposed method is not sensitive to the initialization (i.e., for the same dataset, the proposed method will show the same result in different runs. This can be demonstrated by Demo 1). 
-
-2) **One can also choose to directly run the code in my code ocean: https://codeocean.com/capsule/3297972/tree**
+Note: **One can also choose to directly run the code in my code ocean: https://codeocean.com/capsule/3297972/tree**
 
 # Figures
 
