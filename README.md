@@ -15,7 +15,8 @@ have a certain degree of practical value in this big data era.
 
 # Quick start
 **Demo1.m** and **Demo2.m** were successfully tested on Matlab2018 (on a computer with a 3 GHz Intel i5 processor and 32 GB RAM). 
-Note: **One can also choose to directly run the code in my code ocean: https://codeocean.com/capsule/3297972/tree**
+
+Note: **Besides downloading and running the codes, one can also directly run the code in my code ocean: https://codeocean.com/capsule/3297972/tree**
 
 # Figures
 
