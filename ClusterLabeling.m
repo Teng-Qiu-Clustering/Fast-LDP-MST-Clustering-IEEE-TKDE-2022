@@ -1,6 +1,6 @@
 function c = ClusterLabeling(pr,rs)
 % Written by Teng Qiu (UESTC), Chengdu, China, 2022
-% InPut:
+% Input:
 %    pr: parent node vector;
 %    rs: root node vector;
 % Output:
@@ -9,8 +9,10 @@ function c = ClusterLabeling(pr,rs)
 % first, determine the root label of each node;
 r = pr; % initialize the root label vector r (we will update it in the following loop)
 N = length(pr);
-passed_nodes = zeros(1,N); % Preallocate the maximum space for the passed nodes, since there are maximally N passed nodes.
-% (this is important for speed in matlab; avoid using concatenation operation to store all the passed nodes, despite that we decribe this in our pseudo code of Alg.3; concatenation operation is inefficient for matlab)
+passed_nodes = zeros(1,N); % Pre-allocate the maximum space for the passed nodes, since there are maximally N passed nodes.
+% note: the above pre-allocation aims to avoid using concatenation operation 
+% (shown in the pseudocode of Alg.3) to store all the passed nodes;
+% since concatenation operation is inefficient for Matlab.
 for i = 1:N
     if r(i)~=i
         parent=i;
@@ -21,7 +23,7 @@ for i = 1:N
             t = t + 1;
             passed_nodes(t) = parent;
         end
-        r(passed_nodes(1:t))=parent; % update root label of all the passed nodes (note that "parent" stores the index of the reached root now).
+        r(passed_nodes(1:t))=parent; % update root label of all the passed nodes (note that here "parent" stores the index of the reached root).
     end
 end
 
