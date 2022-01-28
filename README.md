@@ -29,8 +29,8 @@ indicate higher clustering accuracy).
  
  **** 
  
- ![Fig.2](https://github.com/Teng-Qiu-Clustering/FastLDPMST/blob/main/Result/LDPMST-vs-FastLDPMST_on_GSC.png)
-**Fig.2**: Comparison between LDP-MST (2nd column) and FastLDPMST (3rd column)
+ ![Fig.2](https://github.com/Teng-Qiu-Clustering/Fast-LDP-MST/blob/main/Result/LDPMST-vs-FastLDPMST_on_GSC.png)
+**Fig.2**: Comparison between LDP-MST (2nd column) and Fast LDP-MST (3rd column)
 on two challenging datasets (1st column). Each point represents a 2-dimensional sample. Different colors (in 2nd and 3rd columns) on points indicate different clustering labels assigned by the clustering methods. 
  
  
