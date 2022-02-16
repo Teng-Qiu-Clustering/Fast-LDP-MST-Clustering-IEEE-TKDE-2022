@@ -1,4 +1,4 @@
-# Fast LDP-MST: an efficient density-based clustering method for large-size datasets.
+# Fast LDP-MST: an efficient density-based clustering method for large-size datasets (IEEE Transactions on Knowledge and Data Engineering, 2022, DOI: 10.1109/TKDE.2022.3150403).
 Cluster analysis is widely studied and used in diverse
 fields. Despite that
 many clustering methods have been proposed, it is rare for a clustering
