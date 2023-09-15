@@ -1,0 +1,5 @@
+This is a fast approximate knn method,
+initialized by Random-Projection-forest and then modifed by NNDescent
+The Matlab binding of this fast knn method is provided by Provided by Jonathan Ebrahimian from Stanford University.
+
+The .mexw64 file means that currently this method can be only run in Windows.
