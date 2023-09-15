@@ -23,7 +23,7 @@ Note 1: **Besides downloading and running the codes, one can also directly run t
 
 Note 2: **# How to use this method to test real-world dataset (use the following function)**
 
-[Label,time] = FastLDPMST(data, nC, MinSize, K); %% data: test dataset (a matrix with column being features); nC: number of expected clusters; MinSize and K: one can follow the setttings in "Demo1.m"; Label: a vector indicating cluster assignments; time: runtime; 
+[Label,time] = FastLDPMST(data, nC); %% data: test dataset (a matrix with columns being features); nC: number of expected clusters; Label: a vector indicating cluster assignments; time: runtime; Besides, it is noteworthy that there are actually two parameters (MinSize and K) in this function; in practice, one can consider adjust them based on their default settings, which could lead to better results). 
 
 # Figures
 
