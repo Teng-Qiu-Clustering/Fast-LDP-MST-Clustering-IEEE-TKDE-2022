@@ -19,7 +19,11 @@ have a certain degree of practical value in this big data era.
 # Quick start
 **Demo1.m** and **Demo2.m** were successfully tested on Matlab2018 (on a computer with a 3 GHz Intel i5 processor and 32 GB RAM). 
 
-Note: **Besides downloading and running the codes, one can also directly run the code in my code ocean: https://codeocean.com/capsule/3297972/tree**
+Note 1: **Besides downloading and running the codes, one can also directly run the code in my code ocean: https://codeocean.com/capsule/3297972/tree**
+
+Note 2: **# How to use this method to test real-world dataset (use the following function)**
+
+[Label,time] = FastLDPMST(data, nC); %% data: test dataset (a matrix with column being features); nC: number of expected clusters; MinSize and K: one can follow the setttings in "Demo1.m"; Label: a vector indicating cluster assignments; time: runtime; 
 
 # Figures
 
